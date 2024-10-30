@@ -1,0 +1,105 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    command: ["npm", "run", "backend-build"]
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_Host=postgres
+      - DB_Port=5432
+      - DB_NAME=${DB_NAME}
+      - SERVERPORT=5000
+      - JWT_SEC=${JWT_SEC}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_SECRET_KEY=${CLOUDINARY_SECRET_KEY}
+    restart: "always"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+      - pgadmin
+    networks:
+      - private
+      - public
+      - customnetwork
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" 
+          memory: "1.5G"
+  postgres:
+    image: 'postgres'
+    restart: 'always'
+    ports:
+      - "5432:5432"
+    environment:
+      - PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_Host=postgres
+      - DB_Port=5432
+      - DB_NAME=${DB_NAME}
+      - JWT_SEC=${JWT_SEC}
+       - NODE_ENV="production"
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=postgres
+    networks:
+      customnetwork:
+        ipv4_address: 172.21.0.20
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '1.2G'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "15433:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=roman.rostock@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - postgres
+    networks:
+      customnetwork:
+        ipv4_address: 172.21.0.21
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - public
+    depends_on:
+      - backend
+    volumes:
+      - ./build:/app/build
+    restart: always
+    ports:
+      - "3000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '1.2G'
+
+networks: 
+  customnetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/26
+  private: {}
+  public: {}
