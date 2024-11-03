@@ -5,8 +5,8 @@ export const createAdminmessagesTable = ()=>{
         CREATE TABLE IF NOT EXISTS adminmessages(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
-        user_id VARCHAR(255),
-        usermessage_id VARCHAR(255),
+        user_id INTEGER NOT NULL,
+        usermessage_id INTEGER NOT NULL,
         message TEXT NOT NULL,
         adminname VARCHAR(255),
         admin_id INTEGER NOT NULL,
