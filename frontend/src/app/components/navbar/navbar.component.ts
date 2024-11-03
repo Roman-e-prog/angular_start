@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services&interceptors/auth.service';
 interface Navlinks{
   url:string,
   name:string
@@ -14,11 +15,11 @@ interface Navlinks{
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit{
-constructor(private httpClient: HttpClient){}
+constructor(private httpClient: HttpClient, private authService: AuthService){}
 navlinks: Navlinks[] | null = null;
-
+user = this.authService.getUser();
   ngOnInit(): void {
-    this.httpClient.get<Navlinks[]>('../../jsons/navlinks.json').subscribe({
+    this.httpClient.get<Navlinks[]>('assets/navlinks.json').subscribe({
       next: (data)=>{
         this.navlinks = data;
       },
