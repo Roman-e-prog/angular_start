@@ -1,10 +1,11 @@
-$fontColor: #f0eeee;
-$mainBg: rgb(53, 11, 202);
+$fontColor: #dad3d3;
+$mainBg: rgb(25, 12, 71);
 $secondBg: #03043b;
 $elementColor: rgba(7, 179, 50, 0.333);
 
 @mixin mainButton{
     padding: 5px;
+    width: 200px;
     color: $fontColor;
     background: $secondBg;
     cursor: pointer;
