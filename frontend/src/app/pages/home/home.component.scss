@@ -1,0 +1,29 @@
+@import '../../../variables';
+.container{
+@include container;
+}
+.contentWrapper{
+    width: 100%;
+    height: inherit;
+    display: flex;
+    align-items: center;
+
+    & .picture{
+        flex:1;
+        height: 100%;
+    }
+    & .blogName{
+        flex:1;
+        height: 100%;
+        padding: 20px;
+
+        & .title{
+            color:$fontColor;
+        }
+        & .name{
+            color:$fontColor;
+            margin-top: 20px;
+        }
+    }
+
+}
