@@ -1,0 +1,35 @@
+@import '../../../_variables.scss';
+
+.container{
+    @include container;
+}
+.uebermichWrapper{
+    width: 100%;
+    height: inherit;
+    display: flex;
+    & .photoAndAdress{
+        flex:1;
+        padding: 5px;
+        height: 100%;
+        & img{
+            height:250px;
+        }
+        & .adress{
+            margin-top: 10px;
+
+            & .street, .town, .tel{
+                color: $fontColor;
+                margin: 5px 5px;
+            }
+        }
+    }
+    .uebermich{
+        flex: 4;
+        height: 100%;
+        padding: 10px;
+
+        & .content{
+            color: $fontColor;
+        }
+    }
+}

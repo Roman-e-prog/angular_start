@@ -1,0 +1,14 @@
+[
+    {
+        "name": "HTML",
+        "url": "/html"
+    },
+    {
+        "name": "CSS",
+        "url": "/css"
+    },
+    {
+        "name": "JavaScript",
+        "url": "/javaScript"
+    }
+]

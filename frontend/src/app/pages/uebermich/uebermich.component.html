@@ -1,1 +1,16 @@
-<p>uebermich works!</p>
+<div class="container">
+    <app-navbar></app-navbar>
+    <div class="uebermichWrapper">
+        <div class="photoAndAdress">
+            <img src="/assets/img/roman.jpg" alt="Roman Armin Rostock">
+            <div class="adress">
+                <p class="street">Ludwigstr. 47</p>
+                <p class="town">59846 Sundern</p>
+                <p class="tel">0170/3285419</p>
+            </div>
+        </div>
+        <div class="uebermich">
+            <p class="content" *ngFor="let uebermich of allUebermich$ | async">{{uebermich.my_person}}</p>
+        </div>
+    </div>
+</div>
