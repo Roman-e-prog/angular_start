@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 })
 var token = passgen.create(24);
 export const register = async (req:Request, res:Response)=>{
-    console.log('Iam triggered')
+    console.log('Iam here')
     const salt = await bcrypt.genSalt(10);
     const hash = bcrypt.hashSync(req.body.password, salt)
     const username = req.body.username;
@@ -29,6 +29,7 @@ export const register = async (req:Request, res:Response)=>{
     }
 }
 export const login = async(req:Request, res:Response)=>{
+    console.log('here login')
     const username = req.body.username
     const email = req.body.email
     try{
@@ -61,6 +62,7 @@ export const login = async(req:Request, res:Response)=>{
         }
     )
     } catch(error){
+        console.log(error)
         res.status(403).json("Kein Login möglich")
     }
 }
