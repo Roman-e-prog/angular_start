@@ -1,14 +1,16 @@
 <div class="container">
     <div class="logo">
-        <a [routerLink]="">
+        <a [routerLink]="['/']">
         <img src="assets/img/roman.jpg" alt="Roman Armin Rostock">
     </a>
     </div>
     <nav class="navbar">
         <ul class="linkList">
             <li class="navli" *ngFor="let navlink of navlinks">
-                <a [routerLink]="['/', navlink.url]" id="anchor">{{navlink.name}}</a>
+                <a [routerLink]="[navlink.url]" id="anchor">{{navlink.name}}</a>
             </li>
+            <li class="navli" *ngIf="user && user !== null">Logout</li>
+            <li class="navli" *ngIf="user && user !== null && user.is_admin">Dashboard</li>
         </ul>
     </nav>
 </div>
