@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="displayBibliothek">
+        <div class="fieldWrapper" *ngFor="let bibliothek of allBibliothek$ | async">
+            <h3 class="bibliothek_title">{{bibliothek.bibliothek_title}}</h3>
+            <h3 class="bibliothek_ressort">{{bibliothek.bibliothek_ressort}}</h3>
+            <iframe [src]="" frameborder="0" class="video"></iframe>
+        </div>
+    </div>
+    <div class="formWrapper">
+        <form [formGroup]="bibliothekForm" (ngSubmit)="onSubmit()" class="bibliothekForm">
+            <div class="formGroup">
+                <label for="bibliothek_title" class="label">Titel</label>
+                <input type="text" 
+                        id="bibliothek_title" formControlName="bibliothek_title" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="biblothek_ressort" class="label">Titel</label>
+                <input type="text" 
+                        id="biblothek_ressort" formControlName="biblothek_ressort" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="biblothek_url" class="label">Url des Videos</label>
+                <input type="text" 
+                        id="biblothek_url" formControlName="biblothek_url" class="input">
+            </div>
+            <div class="buttonWrapper">
+                <button class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

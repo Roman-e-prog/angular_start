@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="displayUebermich">
+            <p class="content" *ngFor="let uebermich of allUebermich$ | async">{{uebermich.my_person}}</p>
+    </div>
+    <div class="formWrapper">
+        <form [formGroup]="uebermichForm" (ngSubmit)="onSubmit()" class="ubermichForm">
+            <div class="formGroup">
+                <label for="my_person" class="label">Angaben zu meiner Person</label>
+                <textarea name="my_person" id="my_person" formControlName="my_person"class="my_person" placeholder="Zu meiner Person"></textarea>
+            </div>
+            <div class="buttonWrapper">
+                <button class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>

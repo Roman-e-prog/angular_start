@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="displayForumTheme">
+        <div class="fieldWrapper" *ngFor="let forumTheme of allForumThemes$ | async">
+            <h3 class="forumThemeTitle">{{forumTheme.title}}</h3>
+            <h3 class="forumThemeRessort">{{forumTheme.ressort}}</h3>
+            <p class="content" >{{forumTheme.content}}</p>
+        </div>
+    </div>
+    <div class="formWrapper">
+        <form [formGroup]="forumThemeForm" (ngSubmit)="onSubmit()" class="forumThemeForm">
+            <div class="formGroup">
+                <label for="title" class="label">Titel</label>
+                <input type="text" 
+                        id="title" formControlName="title" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="ressort" class="label">Ressort</label>
+                <input type="text" 
+                        id="ressort" formControlName="ressort" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="content" class="label">Inhalt des Forumthemas</label>
+                <textarea name="content" id="content" formControlName="content"class="input" placeholder="Inhalt des Forumthemas"></textarea>
+            </div>
+            <div class="buttonWrapper">
+                <button class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>
+

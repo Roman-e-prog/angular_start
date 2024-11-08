@@ -1,0 +1,49 @@
+@import '../../../../variables';
+.container{
+    @include container;
+}
+.displayForumTheme{
+    width: 100%;
+}
+.fieldWrapper{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid $fontColor;
+
+    & .forumThemeTitle, .forumThemeRessort, .content{
+        color: $fontColor;
+    }
+}
+.formWrapper{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    
+    & .forumThemeForm{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & .formGroup{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            & .label{
+                color: $fontColor;
+                margin: 2px 0;
+            }
+            & .input{
+                width: 100%;
+            }
+        }
+        & .buttonWrapper{
+            width: 100%;
+            margin-top: 10px;
+
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+    }
+}
