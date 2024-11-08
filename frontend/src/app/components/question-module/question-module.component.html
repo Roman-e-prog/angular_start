@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="closeWrapper">
+        <span title="Schließen" class="closeButton" (click)="handleClose()">X</span>
+    </div>
+    <div class="formWrapper">
+        <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="questionForm">
+            <div class="topWrapper">
+                <div class="formGroup">
+                    <label for="question_theme" class="label">Dein Thema</label>
+                    <input type="text" id="question_theme" formControlName="question_theme" class="input">
+                    <div class="error" *ngIf="questionForm.get('question_theme')?.errors?.['required'] && (questionForm.get('question_theme')?.touched || questionForm.get('question_theme')?.dirty)">
+                        Das Thema ist ein Pflichtfeld
+                      </div>
+                </div>
+                <div class="formGroup">
+                    <label for="question_ressort" class="label">Ressort</label>
+                    <input type="text" id="question_ressort" formControlName="question_ressort" class="input"  readonly>
+                </div>
+            </div>
+            <quill-editor class="editor" formControlName="question"></quill-editor>
+            <div class="buttonWrapper">
+                <button type="submit" class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>

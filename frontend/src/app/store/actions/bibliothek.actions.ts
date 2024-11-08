@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import { Bibliothek } from '../reducers/bibliothek.reducer';
-export const createBibliothek = createAction('[bibliothek] Create Bibliothek', props<{BibliothekData: Bibliothek}>())
+export const createBibliothek = createAction('[bibliothek] Create Bibliothek', props<{bibliothekData: Bibliothek}>())
 export const createBibliothekSuccess = createAction('[bibliothek] Create Bibliothek Success', props<{bibliothekData: Bibliothek}>())
 export const createBibliothekError = createAction('[bibliothek] Create Bibliothek Error', props<{error: any}>())
 

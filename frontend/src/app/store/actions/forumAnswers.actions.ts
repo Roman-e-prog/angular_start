@@ -17,5 +17,8 @@ export const getForumAnswerSuccess = createAction('[forumAnswer] Get ForumAnswer
 export const getForumAnswerError = createAction('[forumAnswer] Get ForumAnswer Error', props<{error: any}>())
 
 export const getAllForumAnswer = createAction('[forumAnswer] Getall ForumAnswer')
-export const getAllForumAnswerSuccess = createAction('[forumAnswer] Getall ForumAnswer Success', props<{data:ForumAnswer[]}>())
+export const getAllForumAnswerSuccess = createAction('[forumAnswer] Getall ForumAnswer Success', props<{forumAnswerData:ForumAnswer[]}>())
 export const getAllForumAnswerError = createAction('[forumAnswer] Getall ForumAnswer Error', props<{error: any}>())
+export const getAllAnswersToQuestion = createAction('[forumAnswer] Getall ForumAnswer', props<{id:number}>())
+export const getAllAnswersToQuestionSuccess = createAction('[forumAnswer] Getall ForumAnswer Success', props<{forumAnswerData:ForumAnswer[]}>())
+export const getAllAnswersToQuestionError = createAction('[forumAnswer] Getall ForumAnswer Error', props<{error: any}>())

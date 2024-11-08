@@ -105,8 +105,5 @@ getAllForum$ = createEffect(()=>
     )
 );
 
-
-
-    
     constructor(private store: Store, private actions$: Actions, private httpClient: HttpClient){}
 }

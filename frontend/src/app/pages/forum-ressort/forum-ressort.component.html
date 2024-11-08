@@ -1,0 +1,43 @@
+<div class="container">
+    <app-navbar></app-navbar>
+    <div class="contentWrapper">
+        <div class="topicWrapper">
+            <button class="topicButton" *ngIf="!questionModule" (click)="handleQuestion()">Neue Frage</button>
+            <div class="questionModuleWrapper" *ngIf="questionModule">
+                <app-question-module [questionRessort]="name" (closeQuestion)="handleClose()"></app-question-module>
+            </div>
+        </div>
+        <div class="fieldWrapper" *ngFor="let forum of filteredForums$ | async">
+                <div class="mainWrapper">
+                    <a [routerLink]="['/forum/', forum.question_ressort, forum.id]" class="singleQuestionLink" (click)="handleViews(forum.id!)">
+                    <div class="topWrapper">
+                        <p class="username">{{forum.username}}</p>
+                        <p class="theme">{{forum.question_theme}}</p>
+                    </div>
+                    <div class="question">
+                        <p>{{getProcessedContent(forum.question)}}</p>
+                    </div>
+                </a>
+                    <div class="likes">
+                        <div class="hasLiked">
+                            <span>{{forum.likes! > 0 ? forum.likes : null}}</span>
+                            <ng-icon name="matThumbUpOutline" (click)="noLikes()"></ng-icon>
+                        </div>
+                        <div class="hasDisliked">
+                            <span>{{forum.dislikes! > 0 ? forum.dislikes : null}}</span>
+                            <ng-icon name="matThumbDownOutline" (click)="noLikes()"></ng-icon>
+                        </div>
+                        <div [ngClass]="forum.solved ? 'solved' : 'unsolved'">
+                            <ng-icon name="matCheckBoxOutline"></ng-icon>
+                        </div>
+                    </div>
+                </div>
+            <div class="viewsWrapper">
+                <div class="viewsText">
+                    <p>Gesehen von:</p>
+                    <p>{{forum.views}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

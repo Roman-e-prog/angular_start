@@ -30,7 +30,7 @@ createBibliothek$ = createEffect(()=>
     this.actions$.pipe(
         ofType(createBibliothek),
         mergeMap((action)=>{
-           return this.httpClient.post(this.api_url, action.BibliothekData).pipe(
+           return this.httpClient.post(this.api_url, action.bibliothekData).pipe(
                 map((response:any)=>{
                     this.store.dispatch(getAllBibliothek())
                     return createBibliothekSuccess({bibliothekData: response})

@@ -23,3 +23,7 @@ export const selectForumAnswerMessage = createSelector(
     selectForumAnswer,
     (state)=>state.message
 )
+export const selectAllAnswerToQuestion = createSelector(
+    selectForumAnswer,
+    (state)=>state.allAnswersToQuestion
+)

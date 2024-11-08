@@ -1,1 +1,16 @@
-<p>blog works!</p>
+<div class="container">
+    <app-navbar></app-navbar>
+    <div class="contentWrapper">
+        <div class="fieldWrapper" *ngFor="let blog of allBlogEntries$ | async">
+            <a [routerLink]="['/blog/', blog.id]" class="blogAnchor">
+                <div class="textWrapper">
+                    <h3 class="blogTitle">{{blog.blog_title}}</h3>
+                    <p class="blogAuthor">{{blog.blog_author}}</p>
+                </div>
+                <div class="imageWrapper">
+                    <img [src]="image[0]" [alt]="blog.blog_title" *ngFor="let image of blog.images">
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

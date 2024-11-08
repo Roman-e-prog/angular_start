@@ -6,7 +6,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-
+import { UsernameValidator } from '../../validators/uniqueUsername';
+import { EmailValidator } from '../../validators/uniqueEmail';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -15,48 +16,37 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
-  private baseUrl = 'http://localhost:5000/api/auth';
+  registerForm:any = FormGroup;
+  usernameValidator: UsernameValidator;
+  emailValidator: EmailValidator;
 
-  constructor(private toastr: ToastrService, private httpClient: HttpClient, private router: Router) {}
-
-  ngOnInit(): void {
-    this.registerForm = new FormGroup({
-      vorname: new FormControl('', Validators.required),
-      nachname: new FormControl('', Validators.required),
-      username: new FormControl('', Validators.required, this.uniqueUsernameValidator()),
-      email: new FormControl('', [Validators.required, Validators.email], this.uniqueEmailValidator()),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      passwordConfirm: new FormControl('', Validators.required),
-    }, { validators: this.passwordMatchValidator });
+  constructor(private toastr: ToastrService, private httpClient: HttpClient, private router: Router) {
+    this.usernameValidator = new UsernameValidator(this.httpClient);
+    this.emailValidator = new EmailValidator(this.httpClient);
   }
-
-  uniqueUsernameValidator(): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.httpClient.get(`${this.baseUrl}/uniqueUsername?username=${control.value}`).pipe(
-        map((res: any) => {
-          return res ? { usernameTaken: true } : null;
-        })
-      );
-    };
-  }
-
-  uniqueEmailValidator(): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.httpClient.get(`${this.baseUrl}/uniqueEmail?email=${control.value}`).pipe(
-        map((res: any) => {
-          return res ? { emailTaken: true } : null;
-        })
-      );
-    };
-  }
-
-  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const passwordConfirm = group.get('passwordConfirm')?.value;
-    return password === passwordConfirm ? null : { passwordsMismatch: true };
-  }
-
+ ngOnInit(): void {
+  this.registerForm = new FormGroup({
+    vorname: new FormControl('', Validators.required),
+    nachname: new FormControl('', Validators.required),
+    username: new FormControl(null,{
+      validators: [Validators.required],
+      asyncValidators: [this.usernameValidator.uniqueUsernameValidator()],
+      updateOn: 'blur'
+    }),
+    email: new FormControl(null, {
+      validators: [Validators.required, Validators.email],
+      asyncValidators: [this.emailValidator.uniqueEmailValidator()],
+      updateOn: 'blur'
+    }),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    passwordConfirm: new FormControl('', Validators.required),
+  }, { validators: this.passwordMatchValidator, updateOn:'blur' });
+ } 
+    passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+      const password = group.get('password')?.value;
+      const passwordConfirm = group.get('passwordConfirm')?.value;
+      return password === passwordConfirm ? null : { passwordsMismatch: true };
+    }
   onSubmit(): void {
     if (this.registerForm.valid) {
       const newUser = this.registerForm.value;

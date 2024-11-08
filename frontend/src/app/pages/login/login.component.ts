@@ -18,17 +18,16 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit{
   constructor(private httpClient: HttpClient, private toastr: ToastrService, private authService: AuthService, private router: Router){}
 ngOnInit(): void {
-  const loggedInUser = this.authService.getUser();
-   const user = loggedInUser;
-  if(user){
-    console.log(user)
-    if(user.is_admin){
-      this.router.navigate(['/dashboard'])
+   this.authService.user.subscribe(user=>{
+    if(user){
+      if(user.is_admin){
+        this.router.navigate(['/dashboard'])
+      }
+      else{
+        this.router.navigate(['/'])
+      }
     }
-    else{
-      this.router.navigate(['/'])
-    }
-  }
+   })
 }
   loginForm = new FormGroup({
     username: new FormControl('', {
@@ -43,7 +42,6 @@ ngOnInit(): void {
   })
   onSubmit = ()=>{
     if (this.loginForm.valid){
-      console.log(this.loginForm.value)
       const {username, email, password} = this.loginForm.value;
       this.authService.login(username!, email!, password!).subscribe(()=>({
         next: (response: Blogmember)=>{
@@ -53,6 +51,22 @@ ngOnInit(): void {
           console.log(error)
         }
       }))
+    }
+  }
+  passwordForgotten = ()=>{
+    const email = this.loginForm.value.email;
+    if(email === ""){
+      this.toastr.error('Bitte geben Sie Ihre Email ein, um das Password zurückzusetzen')
+    } 
+    else{
+      this.httpClient.post('http://localhost:5000/api/auth/forgotten', {email: email}).subscribe({
+        next:(response)=>{
+          this.toastr.success(response as string)
+        },
+        error: (error)=>{
+          this.toastr.success(error as string)
+        }
+      })
     }
   }
 }

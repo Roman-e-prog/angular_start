@@ -12,26 +12,29 @@
                 <div class="formGroup">
                     <label for="nachname" class="label">Nachname</label>
                     <input type="text" id="nachname" formControlName="nachname" class="input">
-                    <div class="error" *ngIf="registerForm.get('nachname')?.errors?.['required'] &&registerForm.get('nachname')?.touched && registerForm.get('nachname')?.dirty">Das Feld Nachname ist ein Pflichtfeld</div>
+                    <div class="error" *ngIf="registerForm.get('nachname')?.invalid && registerForm.get('nachname')?.touched">Das Feld Nachname ist ein Pflichtfeld</div>
                 </div>
                 <div class="formGroup">
                     <label for="username" class="label">Username</label>
                     <input type="text" id="username" formControlName="username" class="input">
                     <div class="error" *ngIf="registerForm.get('username')?.errors?.['required'] && (registerForm.get('username')?.touched || registerForm.get('username')?.dirty)">
-                        Das Feld Username ist ein Pflichtfeld
-                      </div>
-                      <div class="error" *ngIf="registerForm.get('username')?.errors?.['uniqueUsername'] && (registerForm.get('username')?.touched || registerForm.get('username')?.dirty)">
-                        Der Username ist bereits vergeben
+                      Das Feld Username ist ein Pflichtfeld
+                    </div>
+                      <div class="error" *ngIf="registerForm.get('username')?.errors?.['usernameTaken'] && (registerForm.get('username')?.invalid || registerForm.get('username')?.touched)">
+                        Der Username ist bereits vergeben, bitte wählen Sie einen anderen
                       </div>
                 </div>
                 <div class="formGroup">
                     <label for="email" class="label">Email</label>
                     <input type="email" id="email" formControlName="email" class="input">
-                    <div class="error" *ngIf="registerForm.get('email')?.errors?.['email'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                    <div class="error" *ngIf="registerForm.get('email')?.errors?.['required'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
                         Bitte geben Sie eine gültige Email-Adresse ein
                       </div>
-                      <div class="error" *ngIf="registerForm.get('email')?.errors?.['uniqueEmail'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
-                        Die Email-Adresse ist bereits vergeben
+                    <div class="error" *ngIf="registerForm.get('email')?.errors?.['email'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                        Die Email Adresse ist ungültig
+                      </div>
+                      <div class="error" *ngIf="registerForm.get('email')?.errors?.['emailTaken'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
+                        Die Email-Adresse ist bereits vergeben, bitte wählen Sie eine andere
                       </div>
                 </div>
                 <div class="formGroup">
@@ -45,12 +48,12 @@
                       </div>
                 </div>
                 <div class="formGroup">
-                    <label for="passwordConfirm" class="label">Passwort Bestätigen</label>
+                    <label for="passwordConfirm" class="label">Passwort bestätigen</label>
                     <input type="password" id="passwordConfirm" formControlName="passwordConfirm" class="input">
                     <div class="error" *ngIf="registerForm.get('passwordConfirm')?.errors?.['required'] && (registerForm.get('passwordConfirm')?.touched || registerForm.get('passwordConfirm')?.dirty)">
                         Die Passwortbestätigung ist Pflicht
                       </div>
-                      <div class="error" *ngIf="registerForm.errors?.['passwordMismatch'] && (registerForm.get('passwordConfirm')?.touched || registerForm.get('passwordConfirm')?.dirty)">
+                      <div class="error" *ngIf="registerForm.errors?.['passwordsMismatch'] && (registerForm.get('passwordConfirm')?.touched || registerForm.get('passwordConfirm')?.dirty)">
                         Die Passwörter stimmen nicht überein
                       </div>
                 </div>

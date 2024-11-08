@@ -1,0 +1,60 @@
+@import '../../../variables';
+.container{
+    width: 80%;
+    margin: 40px auto;
+}
+.closeWrapper{
+    width: 100%;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    & .closeButton{
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: red;
+        color: $fontColor;
+        cursor:pointer;
+    }
+}
+.formWrapper{
+    width: 100%;
+
+    & .questionForm{
+        width: 100%;
+
+        & .topWrapper{
+            display: flex;
+            align-items: center;
+
+            & .formGroup{
+                flex:1;
+                display: flex;
+                flex-direction: column;
+
+                & .label{
+                    color: $fontColor;
+                    margin: 2px 0;
+                }
+                & .input{
+                    width: 100%;
+                }
+            }
+        }
+        & .editor{
+            width: 100%;
+            color:$fontColor;
+        }
+        & .buttonWrapper{
+            width: 100%;
+            margin: 5px 0;
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+    }
+}

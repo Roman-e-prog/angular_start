@@ -1,14 +1,13 @@
 [
     {
-        "name": "HTML",
-        "url": "/html"
+        "name": "HTML"
     },
     {
-        "name": "CSS",
-        "url": "/css"
+        "name": "CSS"
+    
     },
     {
-        "name": "JavaScript",
-        "url": "/javaScript"
+        "name": "JavaScript"
+      
     }
 ]

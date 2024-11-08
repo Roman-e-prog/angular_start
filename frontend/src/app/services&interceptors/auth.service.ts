@@ -26,17 +26,13 @@ export class AuthService {
   }
 
   login(username: string, email: string, password: string): Observable<any> {
-    console.log('I am triggered with:', username, email, password)
     return this.httpClient.post('http://localhost:5000/api/auth/login', { username, email, password }).pipe(
       map((response: any) => {
-        console.log(response)
         if (typeof response === 'string') {
-          console.log(response)
           this.toastr.error(response);
           throw new Error(response);
         } else {
           if(typeof window !== 'undefined'){
-            console.log(response)
             localStorage.setItem('user', JSON.stringify(response));
             this.userSubject.next(response);
             return response;
@@ -58,8 +54,10 @@ export class AuthService {
   }
 
   logout() {
+    if(typeof window !== 'undefined'){
     localStorage.removeItem('user');
     this.userSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
+    }
   }
 }

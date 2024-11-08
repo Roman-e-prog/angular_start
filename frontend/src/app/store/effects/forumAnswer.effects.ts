@@ -16,7 +16,10 @@ import {
     getAllForumAnswerError,
     getForumAnswer,
     getForumAnswerSuccess,
-    getForumAnswerError
+    getForumAnswerError,
+    getAllAnswersToQuestion,
+    getAllAnswersToQuestionSuccess,
+    getAllAnswersToQuestionError
 } from '../actions/forumAnswers.actions';
 import { mergeMap, map, of, catchError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -32,7 +35,7 @@ createForumAnswer$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.post(this.api_url, action.forumAnswerData).pipe(
                 map((response:any)=>{
-                    this.store.dispatch(getAllForumAnswer())
+                    this.store.dispatch(getAllAnswersToQuestion({id: action.forumAnswerData.question_id}))
                     return createForumAnswerSuccess({forumAnswerData: response})
                 }),
                 catchError((error)=>{
@@ -95,10 +98,25 @@ getAllForumAnswer$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.get(this.api_url + 'find/').pipe(
                 map((response:any)=>{
-                    return getAllForumAnswerSuccess({data:response})
+                    return getAllForumAnswerSuccess({forumAnswerData:response})
                 }),
                 catchError((error)=>{
                     return of(getAllForumAnswerError({error}))
+                }
+            ))
+        })
+    )
+);
+getAllAnswersToQuestion$ = createEffect(()=>
+    this.actions$.pipe(
+        ofType(getAllAnswersToQuestion),
+        mergeMap((action)=>{
+           return this.httpClient.get(this.api_url + 'findAllAnswersToQuestion/'+ action.id).pipe(
+                map((response:any)=>{
+                    return getAllAnswersToQuestionSuccess({forumAnswerData:response})
+                }),
+                catchError((error)=>{
+                    return of(getAllAnswersToQuestionError({error}))
                 }
             ))
         })

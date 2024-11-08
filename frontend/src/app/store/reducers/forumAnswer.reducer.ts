@@ -14,7 +14,10 @@ import {
     getAllForumAnswerError,
     getForumAnswer,
     getForumAnswerSuccess,
-    getForumAnswerError
+    getForumAnswerError,
+    getAllAnswersToQuestion,
+    getAllAnswersToQuestionSuccess,
+    getAllAnswersToQuestionError,
 } from '../actions/forumAnswers.actions';
 
 export interface ForumAnswer {
@@ -24,13 +27,13 @@ export interface ForumAnswer {
     is_admin: boolean,
     question_id: number,
     answer: string,
-    likes: number ,
-    dislikes: number,
-    like_ids: number[],
-    dislike_ids: number[]
-    has_solved: boolean,
-    answerername: string,
-    answerer_id: number,
+    likes?: number ,
+    dislikes?: number,
+    like_ids?: number[],
+    dislike_ids?: number[]
+    has_solved?: boolean,
+    answerername?: string,
+    answerer_id?: number,
     views?: number,
     created_at?: Date;
     updated_at?: Date;
@@ -39,6 +42,7 @@ export interface ForumAnswer {
 export interface ForumAnswerState {
     forumAnswer: ForumAnswer;
     allForumAnswer: ForumAnswer[];
+    allAnswersToQuestion: ForumAnswer[];
     isLoading: boolean;
     isSuccess: boolean;
     isError: boolean;
@@ -48,6 +52,7 @@ export interface ForumAnswerState {
 const initialState: ForumAnswerState = {
     forumAnswer: {} as ForumAnswer,
     allForumAnswer: [],
+    allAnswersToQuestion: [],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -89,13 +94,26 @@ export const _forumAnswerReducer = createReducer(
     })),
     on(getForumAnswerError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error })),
     on(getAllForumAnswer, (state) => ({ ...state, isLoading: true })),
-    on(getAllForumAnswerSuccess, (state, { data }) => ({
+    on(getAllForumAnswerSuccess, (state, { forumAnswerData }) => ({
         ...state,
         isLoading: false,
         isSuccess: true,
-        allForumAnswer: data
+        allForumAnswer: forumAnswerData
     })),
-    on(getAllForumAnswerError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error }))
+    on(getAllForumAnswerError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error })),
+    on(getAllAnswersToQuestion, (state) => ({ ...state, isLoading: true})),
+    on(getAllAnswersToQuestionSuccess, (state, {forumAnswerData}) => (
+        { ...state, 
+            isLoading: false,
+            isSuccess:true,
+            allAnswersToQuestion: forumAnswerData
+        })),
+    on(getAllAnswersToQuestionError, (state, {error}) => (
+        { ...state, 
+            isLoading: false,
+            isError:true,
+            message: error
+        })),
 );
 export const forumAnswerReducer = (action:any, data:any)=>{
     return _forumAnswerReducer(action, data)

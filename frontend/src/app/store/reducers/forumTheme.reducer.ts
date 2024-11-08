@@ -22,7 +22,6 @@ export interface ForumTheme {
     ressort: string,
     title: string,
     content: string,
-    views: number,
     created_at?: Date;
     updated_at?: Date;
 }
