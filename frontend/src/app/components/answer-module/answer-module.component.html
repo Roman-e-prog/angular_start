@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="closeWrapper">
+        <span title="Schließen" class="closeButton" (click)="handleClose()">X</span>
+    </div>
+    <div class="formWrapper">
+        <form [formGroup]="forumAnswerForm" (ngSubmit)="answerData?.answerername !== '' ?  onAnswerOnAnswerSubmit(): onSubmit()" class="answerForm">
+            <quill-editor class="editor" formControlName="answer"></quill-editor>
+            <div class="buttonWrapper">
+                <button type="submit" class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>
+

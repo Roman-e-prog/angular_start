@@ -1,0 +1,42 @@
+@import '../../../variables';
+@import 'highlight.js/styles/github.css';
+.container{
+    width: 80%;
+    margin: 10px auto;
+}
+.closeWrapper{
+    width: 100%;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+
+    & .closeButton{
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: red;
+        color: $fontColor;
+    }
+}
+.formWrapper{
+    width: 100%;
+
+    & .answerForm{
+        width: 100%;
+        & .editor{
+            width: 100%;
+            color:$fontColor;
+        }
+        & .buttonWrapper{
+            width: 100%;
+            margin: 5px 0;
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+    }
+}
