@@ -9,8 +9,8 @@
             <li class="navli" *ngFor="let navlink of navlinks">
                 <a [routerLink]="[navlink.url]" id="anchor">{{navlink.name}}</a>
             </li>
-            <li class="navli" *ngIf="user && user !== null">Logout</li>
-            <li class="navli" *ngIf="user && user !== null && user.is_admin">Dashboard</li>
+            <li class="navli" *ngIf="user" (click)="handleLogout()">Logout</li>
+            <li class="navli" *ngIf="user && user.is_admin">Dashboard</li>
         </ul>
     </nav>
 </div>

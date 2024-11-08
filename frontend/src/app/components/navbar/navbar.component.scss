@@ -30,10 +30,11 @@
             justify-content: space-around;
             list-style:none;
 
-            & #anchor{
+            & #anchor, .navli{
                 color: $fontColor;
+                cursor: pointer;
             }
-            & #anchor:hover{
+            & #anchor:hover, .navli:hover{
                 color: #beb5b5e0;
             }
         }

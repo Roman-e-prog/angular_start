@@ -28,4 +28,7 @@ user = this.authService.getUser();
       }
     })
   }
+  handleLogout = ()=>{
+    this.authService.logout()
+  }
 }
