@@ -48,7 +48,7 @@ export const getForumAnswer = async (req:Request, res:Response)=>{
         const id = req.params.id;
         try{
             const result = await pool.query(
-                "SELECT * FROM forumAnswer WHERE id = $1",[id]
+                "SELECT * FROM forumAnswers WHERE id = $1",[id]
             )
             res.status(200).json(result.rows[0])
         } catch(error){
@@ -56,6 +56,7 @@ export const getForumAnswer = async (req:Request, res:Response)=>{
         }
 }
 export const getAllForumAnswers = async (req:Request, res:Response)=>{
+    console.log('here the second triggered')
         try{
             const result = await pool.query(
                 "SELECT * FROM forumAnswers"
@@ -67,6 +68,7 @@ export const getAllForumAnswers = async (req:Request, res:Response)=>{
 }
 export const getAllAnswersToQuestion = async (req:Request, res:Response)=>{
     const question_id = req.params.id;
+    console.log(question_id, 'here id')
     try{
         const result = await pool.query(
             "SELECT * FROM forumAnswers WHERE question_id = $1", [question_id]
@@ -81,7 +83,7 @@ export const forumAnswerLikesCount = async (req:Request, res:Response)=>{
     const user_id = req.body.user_id
     try{
         await pool.query(
-            "UPDATE forumAnswer SET likes = likes + 1, like_ids = array_append(like_ids, $2) WHERE id = $1",[id, user_id]
+            "UPDATE forumAnswers SET likes = likes + 1, like_ids = array_append(like_ids, $2) WHERE id = $1",[id, user_id]
         )
     } catch(error){
         res.status(404).json('Not found')
@@ -92,9 +94,10 @@ export const forumAnswerDislikesCount = async (req:Request, res:Response)=>{
     const user_id = req.body.user_id
     try{
         await pool.query(
-            "UPDATE forumAnswer SET dislikes = dislikes + 1, dislike_ids = array_append(dislike_ids, $2) WHERE id = $1",[id, user_id]
+            "UPDATE forumAnswers SET dislikes = dislikes + 1, dislike_ids = array_append(dislike_ids, $2) WHERE id = $1",[id, user_id]
         )
     } catch(error){
+        console.log(error)
         res.status(404).json('Not found')
     }
 }
@@ -103,7 +106,7 @@ export const forumAnswerSolved = async (req:Request, res:Response)=>{
     const question_id = req.body.question_id
     try{
         await pool.query(
-            "UPDATE forumAnswer SET has_solved = true WHERE id = $1",[id]
+            "UPDATE forumAnswers SET has_solved = true WHERE id = $1",[id]
         )
         await pool.query(
             "UPDATE forum SET solved = true WHERE id = $1",[question_id]
