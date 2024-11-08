@@ -30,7 +30,11 @@ import { BibliothekEffect } from './store/effects/bibliothek.effects';
 import { environment } from './environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
 import { JwtInterceptor } from './services&interceptors/http.interceptor';
-
+import { provideIcons } from '@ng-icons/core';
+import { NgIconsModule } from '@ng-icons/core';
+import {matEditOutline, matDeleteOutline, matThumbUpOutline, matThumbDownOutline, matCheckBoxOutline, matArrowBackOutline, matReplyOutline} from '@ng-icons/material-icons/outline'
+import { HtmlStripService } from './services&interceptors/htmlStrip.service';
+import { provideHighlightOptions } from 'ngx-highlightjs';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
@@ -64,9 +68,12 @@ export const appConfig: ApplicationConfig = {
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    provideHighlightOptions({
+      fullLibraryLoader: () => import('highlight.js')
+    }),
     provideQuillConfig({
       modules: {
-        syntax: true,
+        syntax: false,
         toolbar: [
           ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
           ['blockquote', 'code-block'],
@@ -90,6 +97,16 @@ export const appConfig: ApplicationConfig = {
         ]
       }
     }),
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}
+    {provide: HtmlStripService},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
+    provideIcons({
+      matEditOutline,
+      matDeleteOutline, 
+      matThumbUpOutline, 
+      matThumbDownOutline, 
+      matCheckBoxOutline, 
+      matArrowBackOutline,
+      matReplyOutline,
+    })
   ]
 };
