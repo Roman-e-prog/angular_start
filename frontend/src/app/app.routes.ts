@@ -7,6 +7,11 @@ import { BibliothekComponent } from './pages/bibliothek/bibliothek.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AccountComponent } from './pages/account/account.component';
+import { ForumRessortComponent } from './pages/forum-ressort/forum-ressort.component';
+import { SingleBlogComponent } from './pages/single-blog/single-blog.component';
+import { SingleQuestionComponent } from './pages/single-question/single-question.component';
+import { ResetComponent } from './pages/reset/reset.component';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent},
@@ -17,4 +22,9 @@ export const routes: Routes = [
     {path: "register", component: RegisterComponent},
     {path: "login", component: LoginComponent},
     {path: "dashboard", component: DashboardComponent},
+    {path: "account/:id", component: AccountComponent},
+    {path: "blog/:id", component: SingleBlogComponent },
+    {path: "forum/:name", component: ForumRessortComponent},
+    {path: "reset/:token", component: ResetComponent},
+    {path:"forum/:ressort/:id", component:SingleQuestionComponent}
 ];
