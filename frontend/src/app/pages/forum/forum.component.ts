@@ -6,6 +6,11 @@ import { ForumTheme } from '../../store/reducers/forumTheme.reducer';
 import { selectAllForumThemeData, selectForumThemeError, selectForumThemeLoading, selectForumThemeMessage } from '../../store/selectors/forumTheme.selectors';
 import { getAllForumTheme } from '../../store/actions/forumtheme.actions';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { AuthService } from '../../services&interceptors/auth.service';
+import { Blogmember } from '../../store/reducers/blogMember.reducer';
 interface ForumLink{
   name: string,
   url: string
@@ -13,17 +18,18 @@ interface ForumLink{
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink, NavbarComponent],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
 })
 export class ForumComponent {
-  constructor(private store: Store, private toastr: ToastrService, private httpClient: HttpClient){}
-  allUebermich$: Observable<ForumTheme[]> = this.store.select(selectAllForumThemeData);
+  constructor(private store: Store, private toastr: ToastrService, private httpClient: HttpClient, private authService: AuthService){}
+  allForumThemes$: Observable<ForumTheme[]> = this.store.select(selectAllForumThemeData);
   isLoading$: Observable<boolean> = this.store.select(selectForumThemeLoading);
   isError$: Observable<boolean> = this.store.select(selectForumThemeError);
   message$: Observable<string> = this.store.select(selectForumThemeMessage);
   forumLinks:ForumLink[] | null = null;
+  user: Blogmember = this.authService.getUser()
   ngOnInit(): void {
     this.isError$.pipe(
       tap(isError => {
