@@ -29,7 +29,6 @@ export const register = async (req:Request, res:Response)=>{
     }
 }
 export const login = async(req:Request, res:Response)=>{
-    console.log('here login')
     const username = req.body.username
     const email = req.body.email
     try{
@@ -86,6 +85,7 @@ export const uniqueUsername = async (req:Request, res:Response)=>{
 }
 export const uniqueEmail = async (req:Request, res:Response)=>{
     const email = req.body.email;
+    console.log('triggered email', email)
     try{
         const result = await pool.query(
             "SELECT email FROM blogmembers WHERE email = $1", [email]
