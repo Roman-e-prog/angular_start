@@ -7,6 +7,9 @@
     width: 100%;
     height: inherit;
     display: flex;
+    @include responsive(sl){
+        flex-direction: column;
+    }
     & .photoAndAdress{
         flex:1;
         padding: 5px;

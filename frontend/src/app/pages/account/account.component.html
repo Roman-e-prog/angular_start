@@ -1,1 +1,93 @@
-<p>account works!</p>
+<div class="container">
+    <div class="topBar">
+        <div class="greeting">
+            <p class="hallo">Hallo {{user && user.username}}</p>
+        </div>
+        <div class="backWrapper">
+            <button class="goBack" (click)="goBack()">Zurück</button>
+        </div>
+    </div>
+    <div class="middleBar">
+        <div class="adminMessageWrapper">
+            <div class="adminMessages" *ngIf="(userAdminMessage$ | async)?.length; else noMessage">
+                <div class="messageFieldWrapper" *ngFor="let adminMessage of userAdminMessage$ | async">
+                    <h3 class="userGreeting">Hallo {{adminMessage.username}}, </h3>
+                    <p class="nachricht">{{adminMessage.message}}</p>
+                    <span class="adminname">Gruß {{adminMessage.adminname}}</span>
+                </div>
+            </div>
+            <ng-template #noMessage> 
+               <p class="noMessage">Sie haben derzeit keine Nachrichten</p>
+            </ng-template>
+        </div>
+        <div class="userMessageAndDelete">
+            <button class="accountManagement" (click)="handleAccount()" *ngIf="!accountModule">Nachrichten an den Admin & Delete</button>
+            <div class="accountModule" *ngIf="accountModule">
+                <div class="messageModule" *ngIf="messageModule && !deleteWarn">
+                    <form [formGroup]="usermessageForm" (ngSubmit)="onMessageSubmit()" class="userMessageForm">
+                        <div class="formGroup">
+                            <label class="label" for="message">Ihre Nachricht</label>
+                            <textarea id="message" formControlName="message" class="input" placeholder="Ihre Nachricht"></textarea>
+                            <div class="error" *ngIf="usermessageForm.get('message')?.invalid && usermessageForm.get('message')?.touched">Nachricht ist ein Pflichtfeld</div>
+                        </div>
+                        <div class="sendWrapper">
+                            <button type="submit" class="mainButton">Absenden</button>
+                            <button type="button" class="close" (click)="closeModule()">Schließen</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="deleteWarn" *ngIf="deleteWarn && !messageModule">
+                    <div class="warnText">
+                        <p class="warn">Wollen Sie wirklich Ihren Account löschen?</p>
+                    </div>
+                    <div class="deleteWrapper">
+                        <button class="delete" (click)="handleDelete()">Account löschen</button>
+                        <button class="close" (click)="closeModule()">Nein, ich will zurück</button>
+                    </div>
+                </div>
+                <div class="accountButtons" *ngIf="!(messageModule || deleteWarn)">
+                    <button class="message" (click)="openMessageForm()">Admin Kontakt</button>
+                    <button class="closeModule" (click)="closeModule()">Schließen</button>
+                    <button class="warn" (click)="openDeleteWarn()">Account abmelden</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="userQuestionsWrapper">
+        <div class="userQuestions" *ngIf="(allUserQuestions$ | async)?.length">
+            <div class="fieldWrapper" *ngFor="let userQuestion of allUserQuestions$ | async">
+                <a [routerLink]="['/forum/', userQuestion.question_ressort, userQuestion.id]" class="accountAnchor">
+                    <div class="main">
+                        <div class="top">
+                            <p class="theme">{{userQuestion.question_theme}}</p>
+                        </div>
+                        <div class="bottom">
+                            <p class="question">{{getProcessedContent(userQuestion.question)}}</p>
+                        </div>
+                    </div>
+                    <div class="views">
+                        <span class="seen">Gesehen von:</span>
+                        <span class="counter">{{userQuestion.views}}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="updateWrapper">
+        <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()" class="updateUserForm">
+            <div class="formGroup">
+                <label class="label" for="vorname">Vorname</label>
+                <input type="text" id="vorname" formControlName="vorname" class="input">
+                <div class="error" *ngIf="updateUserForm.get('vorname')?.invalid && updateUserForm.get('vorname')?.touched">Das Feld Vorname ist ein Pflichtfeld</div>
+            </div>
+            <div class="formGroup">
+                <label class="label" for="nachname">Nachname</label>
+                <input type="text" id="nachname" formControlName="nachname" class="input">
+                <div class="error" *ngIf="updateUserForm.get('nachname')?.invalid && updateUserForm.get('nachname')?.touched">Das Feld Nachname ist ein Pflichtfeld</div>
+            </div>
+            <div class="buttonWrapper">
+                <button type="submit" class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+</div>

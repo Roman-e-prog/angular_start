@@ -1,5 +1,6 @@
 <div class="container">
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="windowWidth > 560"></app-navbar>
+    <app-mobile-navbar *ngIf="windowWidth < 560"></app-mobile-navbar>
     <div class="contentWrapper">
         <div class="picture">
             <img src="assets/img/programming.jpeg" alt="Computer mit Code">

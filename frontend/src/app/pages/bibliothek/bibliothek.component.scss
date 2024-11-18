@@ -1,0 +1,61 @@
+@import '../../../variables';
+.container{
+    @include container;
+    & .generalTitle, .title{
+        color: $fontColor;
+        margin: 10px 20px;
+    }
+}
+.htmlWrapper, .cssWrapper, .javaScriptWrapper{
+    width: 100%;
+    height: 60vh;
+}
+.sliderWrapper{
+    width: 100%;
+    height:50vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & .fieldWrapper{
+        display: flex;
+        flex-direction: column;
+        height:inherit;
+
+        & .player{
+            // width: 100% !important;
+            flex:2 !important;
+            // overflow: hidden;
+        } 
+        & .text{
+            flex:1;
+            padding: 5px;
+        }
+    }
+
+    & .sliderButtonLeft, .sliderButtonRight{
+        position:absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 200;
+        font-size:30px;
+        color: $fontColor;
+        cursor:pointer;
+    }
+     & .sliderButtonLeft{
+        left:10px;
+     }
+     & .sliderButtonRight{
+        right:10px;
+     }
+     & .text{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border:1px solid $fontColor;
+         & .ressort, .title{
+        color: $fontColor;
+     }
+    }   
+}

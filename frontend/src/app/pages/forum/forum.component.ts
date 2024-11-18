@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { ForumTheme } from '../../store/reducers/forumTheme.reducer';
 import { selectAllForumThemeData, selectForumThemeError, selectForumThemeLoading, selectForumThemeMessage } from '../../store/selectors/forumTheme.selectors';
 import { getAllForumTheme } from '../../store/actions/forumtheme.actions';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { AuthService } from '../../services&interceptors/auth.service';
+import { AuthService } from '../../services_interceptors/auth.service';
 import { Blogmember } from '../../store/reducers/blogMember.reducer';
+import { ResizeObserverService } from '../../services_interceptors/resize.service';
+import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
 interface ForumLink{
   name: string,
   url: string
@@ -18,19 +20,35 @@ interface ForumLink{
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, RouterLink, NavbarComponent, MobileNavbarComponent],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
 })
-export class ForumComponent {
-  constructor(private store: Store, private toastr: ToastrService, private httpClient: HttpClient, private authService: AuthService){}
+export class ForumComponent implements OnInit, OnDestroy{
+  constructor(
+              private store: Store, 
+              private toastr: ToastrService, 
+              private httpClient: HttpClient, 
+              private authService: AuthService,
+              private cd: ChangeDetectorRef,
+              private resizeObserverService: ResizeObserverService,
+              @Inject(PLATFORM_ID) private platFormId: Object, 
+            ){}
   allForumThemes$: Observable<ForumTheme[]> = this.store.select(selectAllForumThemeData);
   isLoading$: Observable<boolean> = this.store.select(selectForumThemeLoading);
   isError$: Observable<boolean> = this.store.select(selectForumThemeError);
   message$: Observable<string> = this.store.select(selectForumThemeMessage);
   forumLinks:ForumLink[] | null = null;
   user: Blogmember = this.authService.getUser()
+  windowWidth!:number;
+  private resizeSubscription!:Subscription;
   ngOnInit(): void {
+    if(isPlatformBrowser(this.platFormId)){
+      this.resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{
+        this.windowWidth = width;
+        this.cd.detectChanges(); 
+      })
+    }
     this.isError$.pipe(
       tap(isError => {
         if (isError) {
@@ -50,5 +68,9 @@ export class ForumComponent {
       }
     })
   }
-  
+  ngOnDestroy(): void {
+    if(this.resizeSubscription){
+      this.resizeSubscription.unsubscribe()
+    }
+  }
 }

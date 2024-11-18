@@ -1,0 +1,276 @@
+@import '../../../variables';
+.container{
+@include container;
+}
+.topBar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    @include responsive(m){
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    & .greeting, .backWrapper{
+        flex:1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    & .hallo{
+        color: $fontColor;
+    }
+    & .goBack{
+        @include mainButton;
+    }
+}
+.middleBar{
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    @include responsive(m){
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .adminMessageWrapper{
+        flex:1;
+        height:inherit;
+        border: 1px solid $fontColor;
+        margin-left: 10px;
+        padding: 5px;
+        @include responsive(m){
+            margin-bottom: 20px;
+        }
+        & .adminMessages{
+            width: 90%;
+            height:inherit;
+            margin: 5px auto;
+
+            & .messageFieldWrapper{
+                width: 100%;
+                & .userGreeting, .nachricht, .adminname{
+                    color: $fontColor;
+                }
+                & .userGreeting{
+                    margin-bottom: 5px;
+                }
+                & .adminname{
+                    margin-top: 5px;
+                }
+            }
+        }
+        & .noMessage{
+            color: $fontColor;
+        }
+    }
+    .userMessageAndDelete{
+        flex:1;
+        height:inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & .accountManagement{
+            @include mainButton;
+        }
+        & .accountModule{
+            width: 90%;
+            margin: 0 auto;
+            height:inherit;
+            padding: 5px;
+
+            & .messageModule{
+                width: 100%;
+                height: inherit;
+
+                & .userMessageForm{
+                    width: 100%;
+                    height: inherit;
+                    display: flex;
+                    flex-direction: column;
+
+                    & .formGroup{
+                        width: 100%;
+                        flex:4;
+                        display: flex;
+                        flex-direction: column;
+
+                        & .label{
+                            color: $fontColor;
+                            margin: 2px 0;
+                        }
+                        & .input{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    & .sendWrapper{
+                        width: 100%;
+                        flex:1;
+                        display: flex;
+                        align-items: center;
+
+                        & .mainButton{
+                            @include mainButton;
+                            flex:1;
+                        }
+                        & .close{
+                            padding: 5px;
+                            background: $elementColor;
+                            color: $fontColor;
+                            flex:1;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            & .deleteWarn{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+
+                & .warnText{
+                    width: 100%;
+                    flex: 2;
+
+                    & .warn{
+                        color: red;
+                        font-size:30px;
+                    }
+                }
+                & .deleteWrapper{
+                    flex:1;
+                    & .delete, .close{
+                        padding: 5px;
+                        background:red;
+                        color: $fontColor;
+                        cursor: pointer;
+                    }
+                    & .close{
+                        background: $elementColor;
+                    }
+                }
+            }
+
+            & .accountButtons{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                @include responsive(m){
+                    flex-direction: column;
+                    margin-bottom: 20px;
+                    align-items: flex-start;
+                }
+
+                & .message, .closeModule, .warn{
+                    padding:10px;
+                    background: $elementColor;
+                    color: $fontColor;
+                    cursor:pointer;
+                    flex:2;
+                    @include responsive(m){
+                        width: 200px;
+                    }
+                }
+                & .closeModule{
+                    background:$secondBg;
+                }
+                & .warn{
+                    background:red;
+                }
+            }
+        }
+    }
+}
+.userQuestionsWrapper{
+    width: 80%;
+    margin: 20px auto;
+
+    .userQuestions{
+        width: 100%;
+
+        & .fieldWrapper{
+            width: 100%;
+            min-height: 200px;
+            border: 1px solid $fontColor;
+            display: flex;
+            flex-direction: column;
+
+            & .accountAnchor{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                min-height: 200px;
+
+                & .main{
+                    flex:4;
+                    min-height: inherit;
+                    display: flex;
+                    flex-direction: column;
+
+                    & .theme, .question{
+                        color: $fontColor;
+                    }
+                    & .top{
+                        flex: 1;
+                        padding: 2px;
+                        width: 100%;
+                        border-bottom: 1px solid $fontColor;
+                    }
+                    & .bottom{
+                        flex:4;
+                        width: 100%;
+                        padding: 2px;
+                    }
+                }
+                & .views{
+                    flex:1;
+                    min-height: inherit;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-left: 1px solid $fontColor;
+                    @include responsive(m){
+                        display:none;
+                    }
+                    & span{
+                        color: $fontColor;
+                    }
+                }
+            }
+        }
+    }
+}
+.updateWrapper{
+    width: 80%;
+    margin: 0 auto;
+
+    & .updateUserForm{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & .formGroup{
+            width: 100%;
+            flex:4;
+            display: flex;
+            flex-direction: column;
+
+            & .label{
+                color: $fontColor;
+                margin: 2px 0;
+            }
+            & .input{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        & .buttonWrapper{
+            width: 100%;
+            margin: 10px 0;
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+    }
+}

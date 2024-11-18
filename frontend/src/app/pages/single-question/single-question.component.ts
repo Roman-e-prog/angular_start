@@ -7,7 +7,7 @@ import { getForum } from '../../store/actions/forum.actions';
 import { ToastrService } from 'ngx-toastr';
 import { matCheckBoxOutline, matDeleteOutline, matEditOutline, matReplyOutline, matThumbDownOutline, matThumbUpOutline } from '@ng-icons/material-icons/outline';
 import { CommonModule, Location } from '@angular/common';
-import { AuthService } from '../../services&interceptors/auth.service';
+import { AuthService } from '../../services_interceptors/auth.service';
 import { selectAllAnswerToQuestion, selectForumAnswerError, selectForumAnswerLoading, selectForumAnswerMessage } from '../../store/selectors/forumAnswers.selector';
 import { getAllAnswersToQuestion } from '../../store/actions/forumAnswers.actions';
 import { ForumAnswer } from '../../store/reducers/forumAnswer.reducer';
@@ -15,7 +15,7 @@ import { Forum } from '../../store/reducers/forum.reducer';
 import { HttpClient } from '@angular/common/http';
 import { AnswerModuleComponent } from '../../components/answer-module/answer-module.component';
 import { NgIconsModule } from '@ng-icons/core';
-import { HtmlStripService } from '../../services&interceptors/htmlStrip.service';
+import { HtmlStripService } from '../../services_interceptors/htmlStrip.service';
 export interface AnswerData{
   username:string,
   user_id: number,
@@ -61,7 +61,6 @@ export class SingleQuestionComponent implements OnInit {
   ngOnInit(): void {
     if(this.id){
       this.store.dispatch(getForum({id:parseInt(this.id)}));
-      console.log(this.id)
       this.store.dispatch(getAllAnswersToQuestion({id:parseInt(this.id)}))
     }
     combineLatest([this.isError$, this.isAnswerError$]).subscribe(([isError ,isAnswerError])=>{

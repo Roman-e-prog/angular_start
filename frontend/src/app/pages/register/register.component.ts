@@ -1,26 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, AsyncValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { UsernameValidator } from '../../validators/uniqueUsername';
 import { EmailValidator } from '../../validators/uniqueEmail';
+import { ResizeObserverService } from '../../services_interceptors/resize.service';
+import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NavbarComponent, CommonModule, RouterLink, HttpClientModule],
+  imports: [ReactiveFormsModule, FormsModule, NavbarComponent, CommonModule, RouterLink, HttpClientModule, MobileNavbarComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm:any = FormGroup;
   usernameValidator: UsernameValidator;
   emailValidator: EmailValidator;
-
-  constructor(private toastr: ToastrService, private httpClient: HttpClient, private router: Router) {
+  windowWidth!: number;
+  private resizeSubscription!: Subscription;
+  constructor(
+                private toastr: ToastrService, 
+                private httpClient: HttpClient, 
+                private router: Router,
+                private resizeObserverService: ResizeObserverService,
+                private cd: ChangeDetectorRef,
+                @Inject(PLATFORM_ID) private platFormId: Object,
+              ) {
     this.usernameValidator = new UsernameValidator(this.httpClient);
     this.emailValidator = new EmailValidator(this.httpClient);
   }
@@ -41,6 +51,13 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     passwordConfirm: new FormControl('', Validators.required),
   }, { validators: this.passwordMatchValidator, updateOn:'blur' });
+  
+  if(isPlatformBrowser(this.platFormId)){
+    this.resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{
+      this.windowWidth = width;
+      this.cd.detectChanges();
+    })
+  }
  } 
     passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
       const password = group.get('password')?.value;
@@ -59,6 +76,11 @@ export class RegisterComponent implements OnInit {
           this.toastr.error(error.message);
         }
       });
+    }
+  }
+  ngOnDestroy(): void {
+    if(this.resizeSubscription){
+      this.resizeSubscription.unsubscribe()
     }
   }
 }

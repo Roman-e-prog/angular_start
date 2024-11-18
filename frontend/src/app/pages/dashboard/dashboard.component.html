@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<div class="container">
+    <app-navbar *ngIf="windowWidth > 560"></app-navbar>
+    <app-mobile-navbar *ngIf="windowWidth < 560"></app-mobile-navbar>
+    <div class="contentWrapper">
+        <app-uebermich-dashboard></app-uebermich-dashboard>
+        <app-blog-dashboard></app-blog-dashboard>
+        <app-bibliothek-dashboard></app-bibliothek-dashboard>
+        <app-forum-theme-dashboard></app-forum-theme-dashboard> 
+         <app-admin-messages-dashboard></app-admin-messages-dashboard>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 <div class="container">
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="windowWidth > 560"></app-navbar>
+    <app-mobile-navbar *ngIf="windowWidth < 560"></app-mobile-navbar>
     <div class="loginWrapper">
         <div class="formWrapper">
             <h1 class="title">Login</h1>

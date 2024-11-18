@@ -1,0 +1,84 @@
+@import '../../../variables';
+
+.container{
+    @include container;
+}
+.contentWrapper{
+    width: 100%;
+
+    & .displayWrapper{
+        width: 100%;
+
+        & .topBar{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 100px;
+            @include responsive(m){
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            & .title, .author{
+                color: $fontColor;
+            }
+            & .title{
+                margin: 20px 0;
+            }
+            & .author{
+                margin-bottom: 20px;
+                font-style: italic;
+            }
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+        & .headRow{
+            width: 90%;
+            margin: 0 auto;
+            background: $fontColor;
+            border:none;
+            height: 2px;
+        }
+        & .descriptionWrapper{
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 100px;
+
+            & .desc{
+                color: $fontColor;
+                font-style: italic;
+            }
+        }
+        & .contentHolder{
+            width: 80%;
+            margin: 0 auto;
+
+            & .content{
+                color: $fontColor;
+            }
+        }
+        & .imagesWrapper{
+            width: 80%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 200px;
+            @include responsive(m){
+                flex-direction: column;
+                height: 600px;
+                margin-top: 5px;
+            }
+            & .image{
+                width: 100px;
+                height: 100px;
+            }
+            & .image:hover{
+                width: 200px;
+                height: 200px;
+            }
+        }
+    }
+}

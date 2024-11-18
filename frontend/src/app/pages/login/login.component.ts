@@ -1,22 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services&interceptors/auth.service';
+import { AuthService } from '../../services_interceptors/auth.service';
 import { Blogmember } from '../../store/reducers/blogMember.reducer';
 import { Router } from '@angular/router';
-
+import { isPlatformBrowser } from '@angular/common';
+import { ResizeObserverService } from '../../services_interceptors/resize.service';
+import { Subscription } from 'rxjs';
+import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NavbarComponent, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, NavbarComponent, CommonModule, MobileNavbarComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
-  constructor(private httpClient: HttpClient, private toastr: ToastrService, private authService: AuthService, private router: Router){}
+export class LoginComponent implements OnInit, OnDestroy{
+  constructor(
+              private httpClient: HttpClient, 
+              private toastr: ToastrService, 
+              private authService: AuthService, 
+              private router: Router,
+              private resizeObserverService: ResizeObserverService,
+              private cd: ChangeDetectorRef,
+              @Inject(PLATFORM_ID) private platFormId: Object,
+            ){}
+  windowWidth!:number;
+  private resizeSubscription!: Subscription;
 ngOnInit(): void {
    this.authService.user.subscribe(user=>{
     if(user){
@@ -28,6 +41,17 @@ ngOnInit(): void {
       }
     }
    })
+   if(isPlatformBrowser(this.platFormId)){
+    this.resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{
+      this.windowWidth = width;
+      this.cd.detectChanges();
+    })
+  }
+}
+ngOnDestroy(): void {
+  if(this.resizeSubscription){
+    this.resizeSubscription.unsubscribe();
+  }
 }
   loginForm = new FormGroup({
     username: new FormControl('', {
