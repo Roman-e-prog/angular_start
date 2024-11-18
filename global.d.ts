@@ -9,7 +9,8 @@ export interface User {
     is_admin:boolean;
     created_at: Date;
     updated_at: Date;
-    accessToken:String;
+    accessToken?:string;
+    refreToken?: string;
   }
 declare global {
     namespace Express {
