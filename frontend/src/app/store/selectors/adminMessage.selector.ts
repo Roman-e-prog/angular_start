@@ -23,3 +23,7 @@ export const selectAdminMessageMessage = createSelector(
     selectAdminMessage,
     (state)=>state.message
 )
+export const selectUserAdminMessage = createSelector(
+    selectAdminMessage,
+    (state)=>state.allUserAdminMessage
+)

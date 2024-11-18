@@ -22,7 +22,7 @@ export interface UserMessage {
     username:string,
     user_id: number,
     message: string,
-    is_answered: boolean,
+    is_answered?: boolean,
     created_at?: Date;
     updated_at?: Date;
 }
