@@ -4,11 +4,13 @@ import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 const passgen = require('passgen');
 import nodemailer from 'nodemailer'
+import { User } from '../../global';
 const transporter = nodemailer.createTransport({
     host: '0.0.0.0',
     port:   1025,
 })
 var token = passgen.create(24);
+  
 export const register = async (req:Request, res:Response)=>{
     console.log('Iam here')
     const salt = await bcrypt.genSalt(10);
@@ -28,12 +30,17 @@ export const register = async (req:Request, res:Response)=>{
         res.status(403).json('Registrierung nicht möglich')
     }
 }
+//token functions
+const sec = process.env.JWT_SEC as string;
+const refreshSec = process.env.JWT_REFRESH_SEC as string;
+const generateAccessToken = (user: object) => { return jwt.sign(user, sec, { expiresIn: '30d' }); }; 
+const generateRefreshToken = (user:object) => { return jwt.sign(user, refreshSec, { expiresIn: '7d' }); };
 export const login = async(req:Request, res:Response)=>{
     const username = req.body.username
     const email = req.body.email
     try{
         await pool.query(
-        "SELECT * from blogmembers WHERE username = $1",[username],(error, results)=>{
+        "SELECT * FROM blogmembers WHERE username = $1",[username],(error, results)=>{
             if(error){
                 throw new Error(error.message)
             }
@@ -45,17 +52,18 @@ export const login = async(req:Request, res:Response)=>{
                 }
                 else{
                     const user = results.rows[0]
-                    const sec = process.env.JWT_SEC as string;
-                    const accessToken = jwt.sign(
-                        {
-                            id:user.id,
-                            is_admin:user.is_admin
-                        },
-                        sec,
-                        {expiresIn:'1h'}
-                        )
+                    const accessToken = generateAccessToken({ 
+                        id:user.id,
+                        is_admin:user.is_admin
+                    })
+                    const refreshToken = generateRefreshToken({ 
+                        id:user.id,
+                        is_admin:user.is_admin
+                    })
+                    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
+
                         const {id, vorname, nachname, username, email, is_admin, profile_picture, created_at,updated_at} = results.rows[0]
-                        res.status(200).json({id, vorname, nachname, username, email, is_admin, profile_picture, created_at,updated_at, accessToken})
+                        res.status(200).json({id, vorname, nachname, username, email, is_admin, profile_picture, created_at,updated_at, accessToken, refreshToken})
                 }
             }
         }
@@ -65,7 +73,18 @@ export const login = async(req:Request, res:Response)=>{
         res.status(403).json("Kein Login möglich")
     }
 }
-
+export const refreshToken = (req: Request, res: Response)=>{
+    const refreshSec = process.env.JWT_REFRESH_SEC as string;
+    const refreshToken = req.cookies.refreshToken
+    console.log(refreshToken, 'i get one from the cookie')
+    if (!refreshToken) return res.status(401).json("Not authenticated");
+    jwt.verify(refreshToken, refreshSec, (err: any, user:any) => { 
+        if (err) return res.status(403).json("Invalid refresh token"); 
+        const newAccessToken = generateAccessToken({ id: user.id, is_admin: user.is_admin }); 
+        res.status(200).json({ accessToken: newAccessToken }); 
+    });
+}
+//verify username and email
 export const uniqueUsername = async (req:Request, res:Response)=>{
     const username = req.body.username;
     try{
@@ -85,7 +104,6 @@ export const uniqueUsername = async (req:Request, res:Response)=>{
 }
 export const uniqueEmail = async (req:Request, res:Response)=>{
     const email = req.body.email;
-    console.log('triggered email', email)
     try{
         const result = await pool.query(
             "SELECT email FROM blogmembers WHERE email = $1", [email]
@@ -101,6 +119,7 @@ export const uniqueEmail = async (req:Request, res:Response)=>{
         res.status(403).json("request is impossible")
     }
 }
+//password forgotten
 export const forgotten = async (req:Request, res:Response) =>{
     const email = req.body.email;
     try{
