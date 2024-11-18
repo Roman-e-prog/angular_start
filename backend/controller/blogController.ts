@@ -4,7 +4,6 @@ import cloudinary from '../utils/cloudinary';
 export const createBlog = async (req:Request, res:Response)=>{
     const {blog_title, blog_content, blog_theme, blog_author} = req.body;
     const files = req.files as Express.Multer.File[];
-    
     if(files){
         const cloudinary_ids: String[] = [];
         const secure_urls: String[] = [];

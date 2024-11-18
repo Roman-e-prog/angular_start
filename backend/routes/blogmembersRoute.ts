@@ -7,6 +7,6 @@ const blogmembersRouter = Router();
 blogmembersRouter.put('/:id', verifyTokenAndAuthorization, updateBlogmember);
 blogmembersRouter.delete('/:id', verifyTokenAndAuthorization, deleteBlogmember);
 blogmembersRouter.get('/find/:id', verifyTokenAndAuthorization, getBlogmember);
-blogmembersRouter.get('/find', verifyTokenAndAdmin,  getAllBlogmembers);
+blogmembersRouter.get('/find',  getAllBlogmembers);
 
 export default blogmembersRouter;
