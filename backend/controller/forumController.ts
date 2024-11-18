@@ -58,7 +58,6 @@ export const getAllForum = async (req:Request, res:Response)=>{
             )
             res.status(200).json(result.rows)
         } catch(error){
-            console.log(error)
             res.status(404).json('Nicht gefunden')
         }
 }
@@ -81,7 +80,6 @@ export const forumLikesCount = async (req:Request, res:Response)=>{
             "UPDATE forum SET likes = likes + 1, like_ids = array_append(like_ids, $2) WHERE id = $1",[id, user_id]
         )
     } catch(error){
-        console.log(error)
         res.status(404).json('Not found')
     }
 }

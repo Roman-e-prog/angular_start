@@ -15,7 +15,6 @@ export const createForumAnswer = async (req:Request, res:Response)=>{
             )
             res.status(200).json(result.rows[0])
         } catch(error){
-            console.log(error)
             res.status(403).json('Upload nicht möglich')
         }
 }
@@ -68,7 +67,6 @@ export const getAllForumAnswers = async (req:Request, res:Response)=>{
 }
 export const getAllAnswersToQuestion = async (req:Request, res:Response)=>{
     const question_id = req.params.id;
-    console.log(question_id, 'here id')
     try{
         const result = await pool.query(
             "SELECT * FROM forumAnswers WHERE question_id = $1", [question_id]
