@@ -29,12 +29,16 @@ import { BlogmemberEffect } from './store/effects/blogmember.effects';
 import { BibliothekEffect } from './store/effects/bibliothek.effects';
 import { environment } from './environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
-import { JwtInterceptor } from './services&interceptors/http.interceptor';
+import { JwtInterceptor } from './services_interceptors/http.interceptor';
 import { provideIcons } from '@ng-icons/core';
 import { NgIconsModule } from '@ng-icons/core';
-import {matEditOutline, matDeleteOutline, matThumbUpOutline, matThumbDownOutline, matCheckBoxOutline, matArrowBackOutline, matReplyOutline} from '@ng-icons/material-icons/outline'
-import { HtmlStripService } from './services&interceptors/htmlStrip.service';
+import {matEditOutline, matDeleteOutline, matThumbUpOutline, matThumbDownOutline, matCheckBoxOutline, matArrowBackOutline, matReplyOutline, matArrowCircleLeftOutline, matArrowCircleRightOutline, matMenuOutline} from '@ng-icons/material-icons/outline'
+import { HtmlStripService } from './services_interceptors/htmlStrip.service';
 import { provideHighlightOptions } from 'ngx-highlightjs';
+import { LOCALE_ID, NgModule } from '@angular/core'; 
+import { registerLocaleData } from '@angular/common'; import localeDe from '@angular/common/locales/de'; 
+registerLocaleData(localeDe);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
@@ -50,8 +54,8 @@ export const appConfig: ApplicationConfig = {
       forumTheme: forumThemeReducer,
       blogmember: BlogmemberReducer,
       bibliothek: bibliothekReducer,
-      adminmessage: adminMessageReducer,
-      usermessage: userMessageReducer,
+      adminMessage: adminMessageReducer,
+      userMessage: userMessageReducer,
     }),
     provideEffects([
       UebermichEffect,
@@ -107,6 +111,10 @@ export const appConfig: ApplicationConfig = {
       matCheckBoxOutline, 
       matArrowBackOutline,
       matReplyOutline,
-    })
+      matArrowCircleLeftOutline,
+      matArrowCircleRightOutline,
+      matMenuOutline
+    }),
+    { provide: LOCALE_ID, useValue: 'de-DE' },
   ]
 };
