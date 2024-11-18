@@ -22,13 +22,14 @@ import forumthemesRouter from './routes/forumthemesRoute';
 import uebermichRouter from './routes/uebermichRoute';
 import usermessagesRouter from './routes/usermessageRouter';
 import { createForgottenTable } from './tables/forgottenTable';
+const cookieParser = require('cookie-parser');
 dotenv.config();
 const app = express();
 const port = process.env.SERVERPORT
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-
+app.use(cookieParser())
 createAdminmessagesTable();
 creatBibliothekTable();
 createBlogmemberTable();
