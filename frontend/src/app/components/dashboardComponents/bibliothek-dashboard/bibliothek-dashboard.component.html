@@ -3,28 +3,37 @@
         <div class="fieldWrapper" *ngFor="let bibliothek of allBibliothek$ | async">
             <h3 class="bibliothek_title">{{bibliothek.bibliothek_title}}</h3>
             <h3 class="bibliothek_ressort">{{bibliothek.bibliothek_ressort}}</h3>
-            <iframe [src]="" frameborder="0" class="video"></iframe>
+             <a [href]="bibliothek.bibliothek_url" class="link">{{bibliothek.bibliothek_url}}</a>
+            <div class="iconWrapper">
+                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(bibliothek)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(bibliothek.id!)"></ng-icon>
+            </div>
         </div>
     </div>
     <div class="formWrapper">
-        <form [formGroup]="bibliothekForm" (ngSubmit)="onSubmit()" class="bibliothekForm">
+        <h3 class="title" *ngIf="!editModule">Bibliothek einpflegen</h3>
+        <h3 class="title" *ngIf="editModule">Bibliothek updaten</h3>
+        <div class="editWrapper" *ngIf="editModule">
+            <app-bibliothek-edit [editData]="editData" (closeEdit)="handleClose()"></app-bibliothek-edit>
+        </div>
+        <form *ngIf="!editModule" [formGroup]="bibliothekForm" (ngSubmit)="onSubmit()" class="bibliothekForm">
             <div class="formGroup">
                 <label for="bibliothek_title" class="label">Titel</label>
                 <input type="text" 
                         id="bibliothek_title" formControlName="bibliothek_title" class="input">
             </div>
             <div class="formGroup">
-                <label for="biblothek_ressort" class="label">Titel</label>
+                <label for="biblothek_ressort" class="label">Ressort</label>
                 <input type="text" 
-                        id="biblothek_ressort" formControlName="biblothek_ressort" class="input">
+                        id="bibliothek_ressort" formControlName="bibliothek_ressort" class="input">
             </div>
             <div class="formGroup">
                 <label for="biblothek_url" class="label">Url des Videos</label>
                 <input type="text" 
-                        id="biblothek_url" formControlName="biblothek_url" class="input">
+                        id="bibliothek_url" formControlName="bibliothek_url" class="input">
             </div>
             <div class="buttonWrapper">
-                <button class="mainButton">Absenden</button>
+                <button type="submit" class="mainButton">Absenden</button>
             </div>
         </form>
     </div>

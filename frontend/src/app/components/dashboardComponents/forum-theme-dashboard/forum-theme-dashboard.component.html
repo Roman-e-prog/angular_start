@@ -4,10 +4,19 @@
             <h3 class="forumThemeTitle">{{forumTheme.title}}</h3>
             <h3 class="forumThemeRessort">{{forumTheme.ressort}}</h3>
             <p class="content" >{{forumTheme.content}}</p>
+            <div class="iconWrapper">
+                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(forumTheme)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(forumTheme.id!)"></ng-icon>
+            </div>
         </div>
     </div>
     <div class="formWrapper">
-        <form [formGroup]="forumThemeForm" (ngSubmit)="onSubmit()" class="forumThemeForm">
+        <h3 class="title" *ngIf="!editModule">Forumthema einpflegen</h3>
+        <h3 class="title" *ngIf="editModule">Forumthema updaten</h3>
+        <div class="editWrapper" *ngIf="editModule">
+            <app-forum-themes-edit [editData]="editData" (closeEdit)="handleClose()"></app-forum-themes-edit>
+        </div>
+        <form *ngIf="!editModule" [formGroup]="forumThemeForm" (ngSubmit)="onSubmit()" class="forumThemeForm">
             <div class="formGroup">
                 <label for="title" class="label">Titel</label>
                 <input type="text" 

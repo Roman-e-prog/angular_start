@@ -1,9 +1,18 @@
 <div class="container">
-    <div class="displayUebermich">
-            <p class="content" *ngFor="let uebermich of allUebermich$ | async">{{uebermich.my_person}}</p>
+    <div class="displayUebermich" *ngFor="let uebermich of allUebermich$ | async">
+            <p class="content">{{uebermich.my_person}}</p>
+            <div class="iconWrapper">
+                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(uebermich)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(uebermich.id!)"></ng-icon>
+            </div>
     </div>
     <div class="formWrapper">
-        <form [formGroup]="uebermichForm" (ngSubmit)="onSubmit()" class="ubermichForm">
+        <h3 class="title" *ngIf="!editModule">Uebermich Daten einpflegen</h3>
+        <h3 class="title" *ngIf="editModule">Uebermich Daten updaten</h3>
+        <div class="editFormWrapper" *ngIf="editModule">
+            <app-uebermich-edit [editData]="editData" (closeEdit)="handleClose()"></app-uebermich-edit>
+        </div>
+        <form *ngIf="!editModule" [formGroup]="uebermichForm" (ngSubmit)="onSubmit()" class="uebermichForm">
             <div class="formGroup">
                 <label for="my_person" class="label">Angaben zu meiner Person</label>
                 <textarea name="my_person" id="my_person" formControlName="my_person"class="my_person" placeholder="Zu meiner Person"></textarea>

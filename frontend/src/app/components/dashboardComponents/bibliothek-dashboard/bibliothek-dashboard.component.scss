@@ -2,16 +2,28 @@
 .container{
     @include container;
 }
-.displayForumTheme{
+
+.displayBibliothek{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    @include responsive(m){
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+}
+.title{
+    color: $fontColor;
+    margin: 10px 0;
 }
 .fieldWrapper{
     width: 30%;
     padding: 2px;
     border: 1px solid $fontColor;
     margin: 5px;
+    @include responsive(m){
+        width:80%;
+    }
     & .video{
         width: 100%;
         height: 150px;

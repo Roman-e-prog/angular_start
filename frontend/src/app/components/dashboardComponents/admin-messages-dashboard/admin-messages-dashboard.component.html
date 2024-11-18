@@ -1,1 +1,83 @@
-<p>admin-messages-dashboard works!</p>
+<div class="container">
+    <div class="displayUserMessage" *ngIf="(allUsermessages$ | async)?.length; else noMessage">
+        <div class="fieldWrapper" *ngFor="let usermessage of allUsermessages$ | async" (click)="handleAnswer(usermessage.username, usermessage.user_id, usermessage.id!)">
+            <span class="userName">{{usermessage.username}}</span>
+            <p class="userMessageid">{{usermessage.id}}</p>
+            <p class="userid">{{usermessage.user_id}}</p>
+            <span class="date">Nachricht vom: {{usermessage.created_at | date: 'fullDate'}}</span>
+            <p class="message">{{usermessage.message}}</p>
+            <ng-icon name="matArrowBackOutline" class="answered" *ngIf="usermessage.is_answered"></ng-icon>
+            <ng-icon name="matDeleteOutline" class="icons" (click)="handleQuestionDelete(usermessage.id!)"></ng-icon>
+        </div>
+    </div>
+    <ng-template #noMessage>
+        <p class="noMessages">Derzeit keine Nachrichten oder Anfragen</p>
+    </ng-template>
+    <div class="userList" *ngIf="(allBlogmembers$ | async)?.length; else noBlogmembers">
+        <button class="displayBlogmembers" (click)="handleOpenBlogmembers()">
+            <span *ngIf="allBlogMember">Schließen</span>
+            <span *ngIf="!allBlogMember">Mitglieder anzeigen</span>
+        </button>
+        <table class="userTable" *ngIf="allBlogMember">
+            <thead class="head">
+                <tr>
+                    <th>Mitgiedsname</th>
+                    <th>Mitgiedsnummer</th>
+                    <th>Eingetreten am</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody class="body">
+                <tr *ngFor="let user of sortedBlogmembers$ | async" (click)="handleMessage(user.id!, user.username!)">
+                    <td>{{user.username}}</td>
+                    <td>{{user.id}}</td>
+                    <td>{{user.created_at | date: 'fullDate'}}</td>
+                    <td>{{user.vorname}}</td>
+                    <td>{{user.nachname}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template  #noBlogmembers>
+        <p class="noUser">Sie haben derzeit keine Mitglieder in Ihrem Blog</p>
+    </ng-template>
+    <div class="formWrapper">
+        <form [formGroup]="adminMessageForm" (ngSubmit)="onSubmit()" class="adminMessageForm">
+            <div class="formGroup">
+                <label for="username" class="label">Username</label>
+                <input type="text" 
+                        id="username" formControlName="username" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="user_id" class="label">User Id</label>
+                <input type="text" 
+                        id="user_id" formControlName="user_id" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="usermessage_id" class="label">Usernachricht Nr.</label>
+                <input type="text" 
+                        id="usermessage_id" formControlName="usermessage_id" class="input">
+            </div>
+            <div class="formGroup">
+                <label for="message" class="label">Nachricht</label>
+                <textarea id="message" formControlName="message" class="input"></textarea>
+            </div>
+            <div class="buttonWrapper">
+                <button type="submit" class="mainButton">Absenden</button>
+            </div>
+        </form>
+    </div>
+    <div class="displayAdminMessage" *ngIf="(allAdminmessages$ | async)?.length">
+        <div class="fieldWrapper" *ngFor="let adminmessage of allAdminmessages$ | async">
+            <span class="adminName">{{adminmessage.adminname}}</span>
+            <span class="date">Nachricht vom: {{adminmessage.created_at | date: 'fullDate'}}</span>
+            <p class="message">{{adminmessage.message}}</p>
+            <p class="toUser">Nachricht an: {{adminmessage.username}}</p>
+            <p class="toUserId">Nachricht an: {{adminmessage.user_id}}</p>
+            <p class="userQuestion">Die Frage {{adminmessage.usermessage_id}}</p>
+        </div>
+    </div>
+</div>

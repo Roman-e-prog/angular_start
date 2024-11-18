@@ -4,14 +4,16 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, tap } from 'rxjs';
 import { ForumTheme } from '../../../store/reducers/forumTheme.reducer';
 import { selectAllForumThemeData, selectForumThemeError, selectForumThemeLoading, selectForumThemeMessage } from '../../../store/selectors/forumTheme.selectors';
-import { createForumTheme, getAllForumTheme } from '../../../store/actions/forumtheme.actions';
+import { createForumTheme, deleteForumTheme, getAllForumTheme } from '../../../store/actions/forumtheme.actions';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { NgIconsModule } from '@ng-icons/core';
+import { matEditOutline, matDeleteOutline } from '@ng-icons/material-icons/outline';
+import { ForumThemesEditComponent } from '../editForms/forum-themes-edit/forum-themes-edit.component';
 @Component({
   selector: 'app-forum-theme-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIconsModule, ForumThemesEditComponent],
   templateUrl: './forum-theme-dashboard.component.html',
   styleUrl: './forum-theme-dashboard.component.scss'
 })
@@ -47,6 +49,20 @@ export class ForumThemeDashboardComponent {
       content:content!,
     }
     this.store.dispatch(createForumTheme({forumThemeData: forumThemeData}))
+  }
+  // edit und delete
+  editModule = false
+  editData: ForumTheme | null = null;
+  handleEdit = (forumTheme: ForumTheme)=>{
+    this.editModule = true;
+    this.editData = forumTheme
+  }
+  handleClose = ()=>{
+    this.editModule = false;
+  }
+  handleDelete = (id: number)=>{
+    console.log('i am here')
+    this.store.dispatch(deleteForumTheme({id: id}))
   }
 }
 

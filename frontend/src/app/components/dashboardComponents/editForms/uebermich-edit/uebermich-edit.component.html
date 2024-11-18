@@ -1,1 +1,14 @@
-<p>uebermich-edit works!</p>
+<div class="formWrapper">
+    <div class="closeWrapper">
+        <span class="close" (click)="handleClose()">X</span>
+    </div>
+    <form [formGroup]="editUebermichForm" (ngSubmit)="onSubmit()" class="editUebermichForm">
+        <div class="formGroup">
+            <label for="my_person" class="label">Update Uebermich</label>
+            <textarea name="my_person" id="my_person" formControlName="my_person" class="input"></textarea>
+        </div>
+        <div class="buttonWrapper">
+            <button type="submit" class="mainButton">Absenden</button>
+        </div>
+    </form>
+</div>

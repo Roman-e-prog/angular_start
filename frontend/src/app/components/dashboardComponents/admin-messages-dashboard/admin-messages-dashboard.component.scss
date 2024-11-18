@@ -1,0 +1,84 @@
+@import '../../../../variables';
+.container{
+    width: 80%;
+    margin: 0 auto;
+    & p, span{
+        color: $fontColor;
+    }
+}
+.answered{
+    font-size: 20px;
+    color:green;
+}
+.displayUserMessage, .displayAdminMessage{
+    width: 100%;
+
+    & .fieldWrapper{
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px Solid $fontColor;
+        color:$fontColor;
+    }
+}
+.userList{
+    width: 100%;
+    margin-top: 10px;
+    @include responsive(m){
+        overflow:auto;
+    }
+    
+    & .displayBlogmembers{
+        @include mainButton;
+        margin-left: 50px;
+        margin-bottom: 10px;
+    }
+    & .userTable{
+        width: 100%;
+
+        & .head tr{
+            background: $elementColor;
+            
+            & th{
+                border: 1px solid $fontColor;
+                color: $fontColor;
+            }
+        }
+        & .body tr td{
+            border: 1px solid $fontColor;
+            color: $fontColor;
+        }
+    }
+}
+.formWrapper{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    
+    & .adminMessageForm{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & .formGroup{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            & .label{
+                color: $fontColor;
+                margin: 2px 0;
+            }
+            & .input{
+                width: 100%;
+            }
+        }
+        & .buttonWrapper{
+            width: 100%;
+            margin-top: 10px;
+
+            & .mainButton{
+                @include mainButton;
+            }
+        }
+    }
+}

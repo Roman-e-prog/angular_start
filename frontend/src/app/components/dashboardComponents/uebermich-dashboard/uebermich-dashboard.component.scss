@@ -1,15 +1,34 @@
 @import '../../../../variables';
 .container{
-    @include container;
+    width: 100%;
+    margin-top: 20px;
+    
+}
+.title{
+    color: $fontColor;
+    margin: 10px 0;
 }
 .displayUebermich{
     width: 80%;
     margin: 0 auto;
     padding: 10px;
     border: 1px solid $fontColor;
+    display: flex;
+    align-items: center;
 
     & .content{
+        flex:4;
         color: $fontColor;
+    }
+    & .iconWrapper{
+        flex:1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .icons{
+            margin-right: 20px;
+        }
     }
 }
 .formWrapper{
