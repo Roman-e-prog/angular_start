@@ -60,4 +60,21 @@ export class AuthService {
     this.router.navigate(['/']);
     }
   }
+  currentUser = this.getUser()
+  refreshToken() { return this.httpClient.post('http://localhost:5000/api/auth/refreshToken', {});}
+  // refreshToken() {
+  //   return this.httpClient.post<any>('http://localhost:5000/api/auth/refreshToken', {id: this.currentUser.id}).subscribe({
+  //     next: (response)=>{
+  //       this.currentUser.accessToken = response;
+  //       localStorage.setItem('user', JSON.stringify(this.currentUser))
+  //       this.userSubject.next(this.currentUser);
+  //         return this.currentUser;
+  //     },
+  //     error: (error)=>{
+  //       this.toastr.error(error);
+  //       this.logout();
+  //       this.router.navigate(['/login'])
+  //     }
+  //   })
+  // }
 }
