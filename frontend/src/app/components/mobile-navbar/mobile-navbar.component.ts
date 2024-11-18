@@ -3,20 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services_interceptors/auth.service';
+import { matMenuOutline } from '@ng-icons/material-icons/outline';
+import { NgIconsModule } from '@ng-icons/core';
 interface Navlinks{
   url:string,
   name:string
 }
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-mobile-navbar',
   standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  imports: [CommonModule, RouterLink, NgIconsModule],
+  templateUrl: './mobile-navbar.component.html',
+  styleUrl: './mobile-navbar.component.scss'
 })
-export class NavbarComponent implements OnInit{
-constructor(private httpClient: HttpClient, private authService: AuthService){}
+export class MobileNavbarComponent implements OnInit{
+  constructor(private httpClient: HttpClient, private authService: AuthService){}
 navlinks: Navlinks[] | null = null;
+menu = false;
+handleMenu = ()=>{
+  if(this.menu){
+    this.menu = false;
+  }
+  else{
+    this.menu = true;
+  }
+}
 user = this.authService.getUser();
   ngOnInit(): void {
     this.httpClient.get<Navlinks[]>('assets/navlinks.json').subscribe({
@@ -31,4 +42,5 @@ user = this.authService.getUser();
   handleLogout = ()=>{
     this.authService.logout()
   }
+
 }

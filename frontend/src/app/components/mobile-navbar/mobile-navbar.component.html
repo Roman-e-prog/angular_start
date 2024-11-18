@@ -5,7 +5,8 @@
     </a>
     </div>
     <nav class="navbar">
-        <ul class="linkList">
+        <ng-icon name="matMenuOutline" class="icons" id="menuButton" (click)="handleMenu()"></ng-icon>
+        <ul *ngIf="menu" class="linkList">
             <li class="navli" *ngFor="let navlink of navlinks">
                 <a [routerLink]="[navlink.url]" id="anchor">{{navlink.name}}</a>
             </li>
