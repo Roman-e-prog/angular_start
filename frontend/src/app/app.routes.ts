@@ -14,10 +14,10 @@ import { SingleQuestionComponent } from './pages/single-question/single-question
 import { ResetComponent } from './pages/reset/reset.component';
 
 export const routes: Routes = [
-    {path: "", component: HomeComponent},
-    {path: "uebermich", component: UebermichComponent},
-    {path: "blog", component: BlogComponent},
-    {path: "forum", component: ForumComponent},
+    {path: "", component: HomeComponent, pathMatch: 'full'},
+    {path: "uebermich", component: UebermichComponent, pathMatch: 'full'},
+    {path: "blog", component: BlogComponent, pathMatch: 'full'},
+    {path: "forum", component: ForumComponent, pathMatch: 'full'},
     {path: "bibliothek", component: BibliothekComponent},
     {path: "register", component: RegisterComponent},
     {path: "login", component: LoginComponent},
