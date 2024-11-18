@@ -19,3 +19,7 @@ export const getForumError = createAction('[forum] Get Forum Error', props<{erro
 export const getAllForum = createAction('[forum] Getall Forum')
 export const getAllForumSuccess = createAction('[forum] Getall Forum Success', props<{data:Forum[]}>())
 export const getAllForumError = createAction('[forum] Getall Forum Error', props<{error: any}>())
+
+export const getAllUserQuestions = createAction('[forum] Getall UserQuestions', props<{id:number}>())
+export const getAllUserQuestionsSuccess = createAction('[forum] Getall UserQuestions Success', props<{data:Forum[]}>())
+export const getAllUserQuestionsError = createAction('[forum] Getall UserQuestions Error', props<{error: any}>())

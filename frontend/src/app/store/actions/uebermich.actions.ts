@@ -4,7 +4,7 @@ export const createUebermich = createAction('[uebermich] Create Uebermich', prop
 export const createUebermichSuccess = createAction('[uebermich] Create Uebermich Success', props<{uebermichData: Uebermich}>())
 export const createUebermichError = createAction('[uebermich] Create Uebermich Error', props<{error: any}>())
 
-export const updateUebermich = createAction('[uebermich]  Update Uebermich', props<{id: number, uebermichData: Uebermich}>())
+export const updateUebermich = createAction('[uebermich]  Update Uebermich', props<{uebermichData: Uebermich}>())
 export const updateUebermichSuccess = createAction('[uebermich] Update Uebermich Success', props<{uebermichData: Uebermich}>())
 export const updateUebermichError = createAction('[uebermich] Update Uebermich Error', props<{error: any}>())
 

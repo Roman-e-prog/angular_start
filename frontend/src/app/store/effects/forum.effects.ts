@@ -16,7 +16,10 @@ import {
     getAllForumError,
     getForum,
     getForumSuccess,
-    getForumError
+    getForumError,
+    getAllUserQuestions,
+    getAllUserQuestionsSuccess,
+    getAllUserQuestionsError
 } from '../actions/forum.actions';
 import { mergeMap, map, of, catchError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -104,6 +107,19 @@ getAllForum$ = createEffect(()=>
         })
     )
 );
-
+getAllUserQuestions$ = createEffect(()=>
+this.actions$.pipe(
+    ofType(getAllUserQuestions),
+    mergeMap((action)=>{
+        return this.httpClient.get(this.api_url + 'allUserQuestions/' + action.id).pipe(
+            map((response:any)=>{
+                return getAllUserQuestionsSuccess({data: response})
+            }),
+            catchError((error)=>{
+                return of(getAllUserQuestionsError(error))
+            })
+        )
+    })
+))
     constructor(private store: Store, private actions$: Actions, private httpClient: HttpClient){}
 }

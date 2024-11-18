@@ -1,10 +1,10 @@
 import {createAction, props} from '@ngrx/store';
 import { Blog } from '../reducers/blog.reducer';
-export const createBlog = createAction('[blog] Create Blog', props<{blogData: Blog}>())
+export const createBlog = createAction('[blog] Create Blog', props<{blogData: any}>())
 export const createBlogSuccess = createAction('[blog] Create Blog Success', props<{blogData: Blog}>())
 export const createBlogError = createAction('[blog] Create Blog Error', props<{error: any}>())
 
-export const updateBlog = createAction('[blog]  Update Blog', props<{id: number, blogData: Blog}>())
+export const updateBlog = createAction('[blog]  Update Blog', props<{id:number, blogData: Blog}>())
 export const updateBlogSuccess = createAction('[blog] Update Blog Success', props<{blogData: Blog}>())
 export const updateBlogError = createAction('[blog] Update Blog Error', props<{error: any}>())
 

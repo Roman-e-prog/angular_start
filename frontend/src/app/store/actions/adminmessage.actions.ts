@@ -19,3 +19,7 @@ export const getAdminMessageError = createAction('[adminMessage] Get AdminMessag
 export const getAllAdminMessage = createAction('[adminMessage] Getall AdminMessage')
 export const getAllAdminMessageSuccess = createAction('[adminMessage] Getall AdminMessage Success', props<{data:AdminMessage[]}>())
 export const getAllAdminMessageError = createAction('[adminMessage] Getall AdminMessage Error', props<{error: any}>())
+
+export const getUserAdminMessages = createAction('[adminMessage] Getall UserAdminMessage', props<{id:number}>())
+export const getUserAdminMessageSuccess = createAction('[adminMessage] Getall UserAdminMessage Success', props<{data:AdminMessage[]}>())
+export const getUserAdminMessageError = createAction('[adminMessage] Getall UserAdminMessage Error', props<{error: any}>())

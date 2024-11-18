@@ -16,7 +16,10 @@ import {
     getAllAdminMessageError,
     getAdminMessage,
     getAdminMessageSuccess,
-    getAdminMessageError
+    getAdminMessageError,
+    getUserAdminMessages,
+    getUserAdminMessageSuccess,
+    getUserAdminMessageError,
 } from '../actions/adminmessage.actions';
 import { mergeMap, map, of, catchError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -104,6 +107,20 @@ getAllAdminMessage$ = createEffect(()=>
         })
     )
 );
+getUserAdminMessages$ = createEffect(()=>
+this.actions$.pipe(
+    ofType(getUserAdminMessages),
+    mergeMap((action)=>{
+        return this.httpClient.get(this.api_url+ 'getUserAdminMessages/'+ action.id).pipe(
+            map((response:any)=>{
+                return getUserAdminMessageSuccess({data: response})
+            }),
+            catchError((error)=>{
+                return of(getUserAdminMessageError({error}))
+            })
+        )
+    })
+))
 
 
 

@@ -14,7 +14,10 @@ import {
     getAllForumError,
     getForum,
     getForumSuccess,
-    getForumError
+    getForumError,
+    getAllUserQuestions,
+    getAllUserQuestionsError,
+    getAllUserQuestionsSuccess
 } from '../actions/forum.actions';
 
 export interface Forum {
@@ -38,6 +41,7 @@ export interface Forum {
 export interface ForumState {
     forum: Forum;
     allForum: Forum[];
+    allUserQuestions: Forum[],
     isLoading: boolean;
     isSuccess: boolean;
     isError: boolean;
@@ -47,6 +51,7 @@ export interface ForumState {
 const initialState: ForumState = {
     forum: {} as Forum,
     allForum: [],
+    allUserQuestions: [],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -94,7 +99,26 @@ export const _forumReducer = createReducer(
         isSuccess: true,
         allForum: data
     })),
-    on(getAllForumError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error }))
+    on(getAllForumError, (state, { error }) => (
+        { 
+            ...state, 
+            isLoading: false, 
+            isError: true, 
+            message: error 
+        })),
+        on(getAllUserQuestions, (state)=>({...state, isLoading:true})),
+        on(getAllUserQuestionsSuccess, (state, {data})=>({
+            ...state,
+            isLoading: false,
+            isSuccess: true,
+            allUserQuestions: data,
+        })),
+        on(getAllUserQuestionsError, (state, {error})=>({
+            ...state,
+            isLoading: false,
+            isError: true,
+            message: error,
+        }))
 );
 export const forumReducer = (action:any, data:any)=>{
     return _forumReducer(action, data)

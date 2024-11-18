@@ -14,7 +14,10 @@ import {
     getAllAdminMessageError,
     getAdminMessage,
     getAdminMessageSuccess,
-    getAdminMessageError
+    getAdminMessageError,
+    getUserAdminMessages,
+    getUserAdminMessageSuccess,
+    getUserAdminMessageError
 } from '../actions/adminmessage.actions';
 
 export interface AdminMessage {
@@ -25,7 +28,6 @@ export interface AdminMessage {
     username:string,
     user_id: number,
     usermessage_id:number,
-    is_answered: boolean,
     created_at?: Date;
     updated_at?: Date;
 }
@@ -33,6 +35,7 @@ export interface AdminMessage {
 export interface AdminMessageState {
     adminMessage: AdminMessage;
     allAdminMessage: AdminMessage[];
+    allUserAdminMessage: AdminMessage[],
     isLoading: boolean;
     isSuccess: boolean;
     isError: boolean;
@@ -42,6 +45,7 @@ export interface AdminMessageState {
 const initialState: AdminMessageState = {
     adminMessage: {} as AdminMessage,
     allAdminMessage: [],
+    allUserAdminMessage:[],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -89,7 +93,20 @@ export const _adminMessageReducer = createReducer(
         isSuccess: true,
         allAdminMessage: data
     })),
-    on(getAllAdminMessageError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error }))
+    on(getAllAdminMessageError, (state, { error }) => ({ ...state, isLoading: false, isError: true, message: error })),
+    on(getUserAdminMessages, (state)=>({...state, isLoading:true})),
+    on(getUserAdminMessageSuccess, (state, {data})=>({
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        allUserAdminMessage:  data
+    })),
+    on(getUserAdminMessageError, (state, {error})=>({
+        ...state,
+        isLoading:false,
+        isError:true,
+        message: error,
+    }))
 );
 export const adminMessageReducer = (action:any, data:any)=>{
     return _adminMessageReducer(action, data)

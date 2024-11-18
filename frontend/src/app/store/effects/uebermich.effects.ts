@@ -45,7 +45,7 @@ updateUebermich$ = createEffect(()=>
     this.actions$.pipe(
         ofType(updateUebermich),
         mergeMap((action)=>{
-           return this.httpClient.put(this.api_url + action.id, action.uebermichData).pipe(
+           return this.httpClient.put(this.api_url + action.uebermichData.id, action.uebermichData).pipe(
                 map((response:any)=>{
                     this.store.dispatch(getAllUebermich())
                     return updateUebermichSuccess({uebermichData: response})

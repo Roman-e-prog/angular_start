@@ -32,6 +32,7 @@ createBibliothek$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.post(this.api_url, action.bibliothekData).pipe(
                 map((response:any)=>{
+                    console.log(response, 'create')
                     this.store.dispatch(getAllBibliothek())
                     return createBibliothekSuccess({bibliothekData: response})
                 }),
@@ -48,6 +49,7 @@ updateBibliothek$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.put(this.api_url + action.id, action.bibliothekData).pipe(
                 map((response:any)=>{
+                    console.log(response, 'update')
                     this.store.dispatch(getAllBibliothek())
                     return updateBibliothekSuccess({bibliothekData: response})
                 }),
@@ -64,6 +66,7 @@ deleteBibliothek$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.delete(this.api_url + action.id).pipe(
                 map((response:any)=>{
+                    console.log('delete')
                     this.store.dispatch(getAllBibliothek())
                     return deleteBibliothekSuccess({id:action.id})
                 }),

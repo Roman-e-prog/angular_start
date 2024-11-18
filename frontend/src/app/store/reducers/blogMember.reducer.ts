@@ -16,13 +16,13 @@ import {
 
 export interface Blogmember {
     id?: number;
-    username: string,
+    username?: string,
     vorname: string,
     nachname: string,
-    email: string,
+    email?: string,
     profile_picture?:"",
-    password: string,
-    is_admin:boolean,
+    password?: string,
+    is_admin?:boolean,
     created_at?: Date;
     updated_at?: Date;
 }
