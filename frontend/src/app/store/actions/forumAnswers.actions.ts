@@ -1,10 +1,11 @@
 import {createAction, props} from '@ngrx/store';
 import { ForumAnswer } from '../reducers/forumAnswer.reducer';
+import { ForumAnswerUpdateData } from '../../components/forum-answer-edit-module/forum-answer-edit-module.component';
 export const createForumAnswer = createAction('[forumAnswer] Create ForumAnswer', props<{forumAnswerData: ForumAnswer}>())
 export const createForumAnswerSuccess = createAction('[forumAnswer] Create ForumAnswer Success', props<{forumAnswerData: ForumAnswer}>())
 export const createForumAnswerError = createAction('[forumAnswer] Create ForumAnswer Error', props<{error: any}>())
 
-export const updateForumAnswer = createAction('[forumAnswer]  Update ForumAnswer', props<{id: number, forumAnswerData: ForumAnswer}>())
+export const updateForumAnswer = createAction('[forumAnswer]  Update ForumAnswer', props<{id: number, forumAnswerData: ForumAnswerUpdateData}>())
 export const updateForumAnswerSuccess = createAction('[forumAnswer] Update ForumAnswer Success', props<{forumAnswerData: ForumAnswer}>())
 export const updateForumAnswerError = createAction('[forumAnswer] Update ForumAnswer Error', props<{error: any}>())
 

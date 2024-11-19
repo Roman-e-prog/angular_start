@@ -1,10 +1,11 @@
 import {createAction, props} from '@ngrx/store';
 import { AdminMessage } from '../reducers/adminMessage.reducer';
+import { UpdateData } from '../../components/dashboardComponents/editForms/admin-messages-edit/admin-messages-edit.component';
 export const createAdminMessage = createAction('[adminMessage] Create AdminMessage', props<{adminMessageData: AdminMessage}>())
 export const createAdminMessageSuccess = createAction('[adminMessage] Create AdminMessage Success', props<{adminMessageData: AdminMessage}>())
 export const createAdminMessageError = createAction('[adminMessage] Create AdminMessage Error', props<{error: any}>())
 
-export const updateAdminMessage = createAction('[adminMessage]  Update AdminMessage', props<{id: number, adminMessageData: AdminMessage}>())
+export const updateAdminMessage = createAction('[adminMessage]  Update AdminMessage', props<{id: number, adminMessageData: UpdateData}>())
 export const updateAdminMessageSuccess = createAction('[adminMessage] Update AdminMessage Success', props<{adminMessageData: AdminMessage}>())
 export const updateAdminMessageError = createAction('[adminMessage] Update AdminMessage Error', props<{error: any}>())
 
