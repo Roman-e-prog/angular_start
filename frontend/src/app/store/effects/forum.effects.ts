@@ -52,6 +52,7 @@ updateForum$ = createEffect(()=>
            return this.httpClient.put(this.api_url + action.id, action.forumData).pipe(
                 map((response:any)=>{
                     this.store.dispatch(getAllForum())
+                    this.store.dispatch(getForum({id: action.id}))
                     return updateForumSuccess({forumData: response})
                 }),
                 catchError((error)=>{

@@ -51,7 +51,7 @@ updateForumAnswer$ = createEffect(()=>
         mergeMap((action)=>{
            return this.httpClient.put(this.api_url + action.id, action.forumAnswerData).pipe(
                 map((response:any)=>{
-                    this.store.dispatch(getAllForumAnswer())
+                    this.store.dispatch(getAllAnswersToQuestion({id: action.forumAnswerData.question_id}))
                     return updateForumAnswerSuccess({forumAnswerData: response})
                 }),
                 catchError((error)=>{
