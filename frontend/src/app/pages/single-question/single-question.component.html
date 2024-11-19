@@ -5,6 +5,12 @@
     <div class="answerModuleWrapper" *ngIf="answerModule">
         <app-answer-module [answerData]="answerData" (closeAnswer)="handleAnswerClose()"></app-answer-module>
     </div>
+    <div class="questionEditWrapper" *ngIf="editForumModule">
+        <app-edit-forum-question [editQuestionData] ="editQuestionData" (closeEdit)="handleClose()"></app-edit-forum-question>
+    </div>
+    <div class="questionEditWrapper" *ngIf="editAnswerModule">
+        <app-forum-answer-edit-module [editAnswerData] ="editAnswerData" (closeAnswerEdit)="handleAnswerEditClose()"></app-forum-answer-edit-module>
+    </div>
     <div class="questionWrapper">
         <div class="fieldWrapper" *ngIf="singleForum$ | async as forum">
             <div class="nameAndTheme">
@@ -30,10 +36,10 @@
                     <ng-icon name="matReplyOutline"></ng-icon>
                 </div>
                 <div *ngIf="user && user.id === forum.user_id || user && user.is_admin"  class="icons">
-                    <ng-icon name="matEditOutline"></ng-icon>
+                    <ng-icon name="matEditOutline" (click)="handleQuestionEdit(forum)"></ng-icon>
                 </div>
                 <div *ngIf="user && user.is_admin"  class="icons">
-                   <ng-icon name="matDeleteOutline"></ng-icon>
+                   <ng-icon name="matDeleteOutline" (click)="handleQuestionDelete(forum.id!)"></ng-icon>
                 </div>
             </div>
         </div>
@@ -62,10 +68,10 @@
                    <ng-icon name="matReplyOutline" class="icons" (click)="handleAnswerReply(answer.question_id, answer.username, answer.user_id)"></ng-icon>
                 </div>
                 <div *ngIf="user && user.id === answer.user_id || user && user.id === answer.answerer_id && user.id !== answer.user_id || user && user.is_admin">
-                    <ng-icon name="matEditOutline" class="icons"></ng-icon>
+                    <ng-icon name="matEditOutline" class="icons" (click)="handleAnswerEdit(answer)"></ng-icon>
                 </div>
                 <div *ngIf="user && user.is_admin" class="icons">
-                    <ng-icon name="matDeleteOutline" class="icons"></ng-icon>
+                    <ng-icon name="matDeleteOutline" class="icons" (click)="handleAnswerDelete(answer.id!)"></ng-icon>
                 </div>
             </div>
     </div>

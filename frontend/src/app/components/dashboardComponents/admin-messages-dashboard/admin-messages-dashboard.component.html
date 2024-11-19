@@ -45,7 +45,10 @@
         <p class="noUser">Sie haben derzeit keine Mitglieder in Ihrem Blog</p>
     </ng-template>
     <div class="formWrapper">
-        <form [formGroup]="adminMessageForm" (ngSubmit)="onSubmit()" class="adminMessageForm">
+        <div *ngIf="editModule" class="adminMessageEditWrapper">
+            <app-admin-messages-edit [editData]="editData" (closeEdit)="handleClose()"></app-admin-messages-edit>
+        </div>
+        <form *ngIf="!editModule" [formGroup]="adminMessageForm" (ngSubmit)="onSubmit()" class="adminMessageForm">
             <div class="formGroup">
                 <label for="username" class="label">Username</label>
                 <input type="text" 
@@ -78,6 +81,10 @@
             <p class="toUser">Nachricht an: {{adminmessage.username}}</p>
             <p class="toUserId">Nachricht an: {{adminmessage.user_id}}</p>
             <p class="userQuestion">Die Frage {{adminmessage.usermessage_id}}</p>
+            <div class="iconWrapper">
+                <ng-icon name="matEditOutline" class="icons" (click)="handleMessageEdit(adminmessage)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" (click)="handleMessageDelete(adminmessage.id!)"></ng-icon>
+            </div>
         </div>
     </div>
 </div>

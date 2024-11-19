@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { combineLatest, map, Observable, tap } from 'rxjs';
 import { AdminMessage } from '../../../store/reducers/adminMessage.reducer';
 import { selectAdminMessageError, selectAdminMessageLoading, selectAdminMessageMessage, selectAllAdminMessageData } from '../../../store/selectors/adminMessage.selector';
-import { createAdminMessage, getAllAdminMessage } from '../../../store/actions/adminmessage.actions';
+import { createAdminMessage, deleteAdminMessage, getAllAdminMessage } from '../../../store/actions/adminmessage.actions';
 import { selectAllBlogmemberData, selectBlogmemberError, selectBlogmemberLoading, selectBlogmemberMessage } from '../../../store/selectors/blogmember.selector';
 import { Blogmember } from '../../../store/reducers/blogMember.reducer';
 import { UserMessage } from '../../../store/reducers/userMessage.reducer';
@@ -13,13 +13,14 @@ import { deleteUserMessage, getAllUserMessage } from '../../../store/actions/use
 import { getAllBlogmember } from '../../../store/actions/blogmember.actions';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
-import { matArrowBackOutline } from '@ng-icons/material-icons/outline';
+import { matArrowBackOutline, matEditOutline, matDeleteOutline } from '@ng-icons/material-icons/outline';
 import { NgIconsModule } from '@ng-icons/core';
 import { AuthService } from '../../../services_interceptors/auth.service';
+import { AdminMessagesEditComponent } from "../editForms/admin-messages-edit/admin-messages-edit.component";
 @Component({
   selector: 'app-admin-messages-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgIconsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIconsModule, AdminMessagesEditComponent],
   templateUrl: './admin-messages-dashboard.component.html',
   styleUrl: './admin-messages-dashboard.component.scss',
   providers: [DatePipe]
@@ -118,5 +119,18 @@ export class AdminMessagesDashboardComponent {
   }
   handleQuestionDelete = (id:number)=>{
     this.store.dispatch(deleteUserMessage({id:id}))
+  }
+  //messageDelete and edit
+  handleMessageDelete = (id:number)=>{
+    this.store.dispatch(deleteAdminMessage({id:id}))
+  }
+  editModule = false;
+  editData: AdminMessage | null = null;
+  handleMessageEdit = (adminMessage: AdminMessage)=>{
+    this.editModule = true;
+    this.editData = adminMessage;
+  }
+  handleClose = ()=>{
+    this.editModule = false;
   }
 }

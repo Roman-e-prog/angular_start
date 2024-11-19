@@ -3,19 +3,21 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectForumData, selectForumError, selectForumLoading, selectForumMessage } from '../../store/selectors/forum.selectors';
 import { combineLatest, map, Observable, tap } from 'rxjs';
-import { getForum } from '../../store/actions/forum.actions';
+import { deleteForum, getForum } from '../../store/actions/forum.actions';
 import { ToastrService } from 'ngx-toastr';
 import { matCheckBoxOutline, matDeleteOutline, matEditOutline, matReplyOutline, matThumbDownOutline, matThumbUpOutline } from '@ng-icons/material-icons/outline';
 import { CommonModule, Location } from '@angular/common';
 import { AuthService } from '../../services_interceptors/auth.service';
 import { selectAllAnswerToQuestion, selectForumAnswerError, selectForumAnswerLoading, selectForumAnswerMessage } from '../../store/selectors/forumAnswers.selector';
-import { getAllAnswersToQuestion } from '../../store/actions/forumAnswers.actions';
+import { deleteForumAnswer, getAllAnswersToQuestion } from '../../store/actions/forumAnswers.actions';
 import { ForumAnswer } from '../../store/reducers/forumAnswer.reducer';
 import { Forum } from '../../store/reducers/forum.reducer';
 import { HttpClient } from '@angular/common/http';
 import { AnswerModuleComponent } from '../../components/answer-module/answer-module.component';
 import { NgIconsModule } from '@ng-icons/core';
 import { HtmlStripService } from '../../services_interceptors/htmlStrip.service';
+import { EditForumQuestionComponent } from '../../components/edit-forum-question/edit-forum-question.component';
+import { ForumAnswerEditModuleComponent } from '../../components/forum-answer-edit-module/forum-answer-edit-module.component';
 export interface AnswerData{
   username:string,
   user_id: number,
@@ -27,7 +29,12 @@ export interface AnswerData{
 @Component({
   selector: 'app-single-question',
   standalone: true,
-  imports: [CommonModule, AnswerModuleComponent, NgIconsModule],
+  imports: [
+            CommonModule, 
+            AnswerModuleComponent, 
+            NgIconsModule, 
+            EditForumQuestionComponent, 
+            ForumAnswerEditModuleComponent],
   templateUrl: './single-question.component.html',
   styleUrl: './single-question.component.scss'
 })
@@ -180,5 +187,31 @@ export class SingleQuestionComponent implements OnInit {
   //goBack
   goBack = ()=>{
     this.location.back()
+  }
+  //update and delete question
+  handleQuestionDelete = (id:number)=>{
+    this.store.dispatch(deleteForum({id:id}))
+  }
+  editForumModule = false;
+  editQuestionData: Forum | null = null;
+  handleClose = ()=>{
+    this.editForumModule = false;
+  }
+  handleQuestionEdit = (forum:Forum)=>{
+    this.editForumModule = true;
+    this.editQuestionData = forum;
+  }
+  //update and delete answer
+  handleAnswerDelete = (id:number)=>{
+    this.store.dispatch(deleteForumAnswer({id:id}))
+  }
+  editAnswerModule = false;
+  editAnswerData: ForumAnswer | null = null;
+  handleAnswerEditClose = ()=>{
+    this.editAnswerModule = false;
+  }
+  handleAnswerEdit = (answer:ForumAnswer)=>{
+    this.editAnswerModule = true;
+    this.editAnswerData = answer;
   }
 }
