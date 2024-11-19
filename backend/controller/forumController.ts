@@ -68,7 +68,6 @@ export const forumViewsCount = async (req:Request, res:Response)=>{
             "UPDATE forum SET views = views + 1 WHERE id = $1",[id]
         )
     } catch(error){
-        console.log(error)
         res.status(404).json('Not found')
     }
 }

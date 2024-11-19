@@ -55,7 +55,6 @@ export const getForumAnswer = async (req:Request, res:Response)=>{
         }
 }
 export const getAllForumAnswers = async (req:Request, res:Response)=>{
-    console.log('here the second triggered')
         try{
             const result = await pool.query(
                 "SELECT * FROM forumAnswers"
