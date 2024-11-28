@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed, tick, wai
 
 import { RegisterComponent } from './register.component';
 import { NgIconsModule, provideIcons } from '@ng-icons/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { routes } from '../../app.routes';
@@ -14,6 +14,7 @@ import { UsernameValidator } from '../../validators/uniqueUsername';
 import { matMenuOutline } from '@ng-icons/material-icons/outline';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../validators/uniqueEmail';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 
 describe('RegisterComponent', () => {
@@ -59,6 +60,7 @@ describe('RegisterComponent', () => {
         NgIconsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
+        BrowserAnimationsModule, 
       ],
       providers:[
         provideIcons({
@@ -66,6 +68,7 @@ describe('RegisterComponent', () => {
         }),
         provideHttpClientTesting(),
         provideRouter(routes),
+        provideAnimations(),
         {provide: ToastrService, useValue: toastrSpy},
         {provide: UsernameValidator, useValue: mockedUsernameValidator},
         {provide: EmailValidator, useValue: mockedEmailValidator},
@@ -78,7 +81,6 @@ describe('RegisterComponent', () => {
     toastr = TestBed.inject(ToastrService);
     activatedRoute = TestBed.inject(ActivatedRoute);
     httpTestingController = TestBed.inject(HttpTestingController);
-    httpClient = TestBed.inject(HttpClient)
     router = TestBed.inject(Router);
     usernameValidator = TestBed.inject(UsernameValidator);
     emailValidator = TestBed.inject(EmailValidator);
@@ -176,131 +178,68 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.errors).toEqual({ passwordsMismatch: true });
   });
 
-  fit('should handle form submission successfully', async () => {
-    // Mock the HTTP call for navlinks.json
-    const req = httpTestingController.expectOne('assets/navlinks.json');
-    req.flush([]); // Mocked response
-    fixture.detectChanges();
+  fit('should handle form submission successfully and trigger validators', async () => {
+    const reqNav = httpTestingController.expectOne('assets/navlinks.json');
+    reqNav.flush([]); // Mocked response
     await fixture.whenStable();
-     // Spy on the group-level validator
-     const passwordMatchSpy = spyOn(component, 'passwordMatchValidator').and.callThrough();
-     //set the asyncValidators
-     const usernameControl = component.registerForm.controls['username'];
-     usernameControl.setAsyncValidators(mockedUsernameValidator.uniqueUsernameValidator());
-    const emailControl = component.registerForm.controls['email'];
-    emailControl.setAsyncValidators(mockedEmailValidator.uniqueEmailValidator());
-    component.ngOnInit();
-    fixture.detectChanges();
-    await fixture.whenStable();
-  
-    // Fill the form with valid values
-    component.registerForm.setValue({
-      vorname: 'John',
-      nachname: 'Doe',
-      username: 'validUsername',
-      email: 'valid@example.com',
-      password: 'password123',
-      passwordConfirm: 'password123',
-    });
-    fixture.detectChanges();
-      // Mock HTTP requests for async validators
-      const usernameReq = httpTestingController.expectOne('http://localhost:5000/api/auth/uniqueUsername');
-      usernameReq.flush(null); // Mock successful response (no error)
-       fixture.detectChanges();
-       await fixture.whenStable();
-      const emailReq = httpTestingController.expectOne('http://localhost:5000/api/auth/uniqueEmail');
-      emailReq.flush(null); // Mock successful response (no error)
-    // Verify the validators are triggered
-    expect(passwordMatchSpy).toHaveBeenCalled();
-     // Trigger validation and wait for async validators
-     expect(mockedUsernameValidator.uniqueUsernameValidator).toHaveBeenCalled();
-     expect(mockedEmailValidator.uniqueEmailValidator).toHaveBeenCalled();
-  
-    fixture.detectChanges();
-    await fixture.whenStable();
-    // Verify form input values
-    const vorname = fixture.debugElement.nativeElement.querySelector('#vorname');
-    const nachname = fixture.debugElement.nativeElement.querySelector('#nachname');
-    const username = fixture.debugElement.nativeElement.querySelector('#username');
-    const email = fixture.debugElement.nativeElement.querySelector('#email');
-    const password = fixture.debugElement.nativeElement.querySelector('#password');
-    const passwordConfirm = fixture.debugElement.nativeElement.querySelector('#passwordConfirm');
-  
-    expect(vorname.value).toEqual('John');
-    expect(nachname.value).toEqual('Doe');
-    expect(username.value).toEqual('validUsername');
-    expect(email.value).toEqual('valid@example.com');
-    expect(password.value).toEqual('password123');
-    expect(passwordConfirm.value).toEqual('password123');
-   
-     fixture.detectChanges();
-      await fixture.whenStable();
-    //tip updateValueAndValidity
-    await component.registerForm.controls['username'].updateValueAndValidity();
-    await component.registerForm.controls['email'].updateValueAndValidity();
-    await component.registerForm.updateValueAndValidity();
-    // Verify the async validators
-    expect(component.registerForm.controls['username'].errors).toBeNull();
-    expect(component.registerForm.controls['email'].errors).toBeNull();
-    expect(component.registerForm.errors).toBeNull(); // No group-level errors
-    //flush microtasts
-    
-   
-
-    await fixture.whenStable()
-     //logging
-    console.log('Form Valid After Validation:', component.registerForm.valid);
-    console.log('Form Errors:', component.registerForm.errors);
-    console.log('Username Control Errors:', component.registerForm.controls['username'].errors);
-    console.log('Email Control Errors:', component.registerForm.controls['email'].errors)
-    console.log('Form Status:', component.registerForm.status);
-    console.log('Username Status:', component.registerForm.controls['username'].status);
-    console.log('Email Status:', component.registerForm.controls['email'].status);
-
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(component.registerForm.valid).toBeTrue();
-  
+    const mockedUser = {
+      vorname: "John",
+      nachname: "Doe",
+      username:"validUsername",
+      email:"valid@example.com",
+    }
     // Spy on navigation
     const routerSpy = spyOn(router, 'navigate');
   
-    // Simulate button click for form submission
-    const mainBtn = fixture.debugElement.nativeElement.querySelector('.mainBtn');
-    expect(mainBtn).toBeTruthy();
-    mainBtn.click();
+    // Attach mocked async validators
+    const usernameControl = component.registerForm.controls['username'];
+    const emailControl = component.registerForm.controls['email'];
   
-    // Further HTTP testing (uncomment if needed)
-    // const reqRegister = httpTestingController.expectOne('http://localhost:5000/api/auth/register');
-    // expect(reqRegister.request.method).toBe('POST');
-    // reqRegister.flush({ success: true });
+    usernameControl.setAsyncValidators(mockedUsernameValidator.uniqueUsernameValidator());
+    emailControl.setAsyncValidators(mockedEmailValidator.uniqueEmailValidator());
   
-    // Verify navigation call
-    // expect(routerSpy).toHaveBeenCalledWith(['/login']);
-  });
+    // Update values to trigger validation
+    usernameControl.setValue('validUsername');
+    emailControl.setValue('valid@example.com');
   
+    usernameControl.updateValueAndValidity();
+    emailControl.updateValueAndValidity();
   
-  
-  
-  xit('should show error on failed submission', async () => {
-     const req = httpTestingController.expectOne('assets/navlinks.json');
-    req.flush([]); // Mocked response
+    // Wait for async validators to complete
     await fixture.whenStable();
-    // Fill valid form data
-    component.registerForm.setValue({
-      vorname: 'John',
-      nachname: 'Doe',
-      username: 'validUsername',
-      email: 'valid@example.com',
-      password: 'password123',
-      passwordConfirm: 'password123',
-    });
+    fixture.detectChanges();
   
-    component.onSubmit();
-    const reqUserFail = httpTestingController.expectOne('http://localhost:5000/api/auth/register'); // 
-    reqUserFail.flush({success: false})
-    expect(toastrSpy.error).toHaveBeenCalledWith('Registration failed');
+    // Verify async validators were triggered
+    expect(mockedUsernameValidator.uniqueUsernameValidator).toHaveBeenCalled();
+    expect(mockedEmailValidator.uniqueEmailValidator).toHaveBeenCalled();
+  
+    // Check validator results
+    expect(usernameControl.errors).toBeNull();
+    expect(emailControl.errors).toBeNull();
+    expect(component.registerForm.valid).toBeFalse(); // Still invalid as other controls are empty
+  
+    // Fill remaining form fields
+    component.registerForm.controls['vorname'].setValue('John');
+    component.registerForm.controls['nachname'].setValue('Doe');
+    component.registerForm.controls['password'].setValue('password123');
+    component.registerForm.controls['passwordConfirm'].setValue('password123');
+  
+    component.registerForm.updateValueAndValidity();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  
+    // Ensure form is now valid
+    expect(component.registerForm.valid).toBeTrue();
+  
+    // Simulate form submission
+    const submitButton = fixture.debugElement.nativeElement.querySelector('.mainBtn');
+    expect(submitButton).toBeTruthy();
+    submitButton.click();
+    fixture.detectChanges();
+   
+    const req = httpTestingController.expectOne('http://localhost:5000/api/auth/register');
+    expect(req.request.method).toBe('POST');
+    req.flush(mockedUser);
+    expect(routerSpy).toHaveBeenCalledWith(['/login'])
   });
-    
-  
 });

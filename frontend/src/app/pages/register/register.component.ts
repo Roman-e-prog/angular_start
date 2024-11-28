@@ -10,6 +10,7 @@ import { UsernameValidator } from '../../validators/uniqueUsername';
 import { EmailValidator } from '../../validators/uniqueEmail';
 import { ResizeObserverService } from '../../services_interceptors/resize.service';
 import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
+import { RegisterService } from '../../services_interceptors/register.service';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 private toastr: ToastrService, 
                 private httpClient: HttpClient, 
                 private router: Router,
+                private registerService: RegisterService,
                 private resizeObserverService: ResizeObserverService,
                 private cd: ChangeDetectorRef,
                 @Inject(PLATFORM_ID) private platFormId: Object,
@@ -65,14 +67,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return password === passwordConfirm ? null : { passwordsMismatch: true };
     }
   onSubmit(): void {
-    console.log('triggered')
-    console.log(this.registerForm.value, 'in the form')
-    console.log(this.registerForm.errors)
-    console.log(this.registerForm.valid)
     if (this.registerForm.valid) {
-      const newUser = this.registerForm.value;
-        console.log(newUser, 'after test')
-      this.httpClient.post('http://localhost:5000/api/auth/register', newUser).subscribe({
+      const {vorname, nachname, username, email, password} = this.registerForm.value;
+        console.log(vorname, nachname, username, email, password, 'after test')
+        console.log(this.registerForm.valid);
+      this.registerService.registerUser(vorname, nachname, username, email, password).subscribe({
         next: (response) => {
           this.router.navigate(['/login']);
         },
