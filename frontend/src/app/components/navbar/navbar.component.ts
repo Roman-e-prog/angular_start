@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services_interceptors/auth.service';
+import { NavlinksService } from '../../services_interceptors/navlinks.service';
 interface Navlinks{
   url:string,
   name:string
@@ -15,16 +16,16 @@ interface Navlinks{
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit{
-constructor(private httpClient: HttpClient, private authService: AuthService){}
+constructor(private httpClient: HttpClient, private authService: AuthService, private navlinksService: NavlinksService){}
 navlinks: Navlinks[] | null = null;
 user = this.authService.getUser();
   ngOnInit(): void {
-    this.httpClient.get<Navlinks[]>('assets/navlinks.json').subscribe({
-      next: (data)=>{
+    this.navlinksService.getNavlinks().subscribe({
+      next:(data)=>{
         this.navlinks = data;
       },
       error: (error)=>{
-        console.error('Error fetching navlinks:', error);
+        console.error('Error fetching navlinks:', error)
       }
     })
   }
