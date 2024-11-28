@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
 var token = passgen.create(24);
   
 export const register = async (req:Request, res:Response)=>{
-    console.log('Iam here')
     const salt = await bcrypt.genSalt(10);
     const hash = bcrypt.hashSync(req.body.password, salt)
     const username = req.body.username;
