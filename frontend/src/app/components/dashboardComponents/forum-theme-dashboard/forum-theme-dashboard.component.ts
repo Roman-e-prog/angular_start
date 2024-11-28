@@ -61,7 +61,6 @@ export class ForumThemeDashboardComponent {
     this.editModule = false;
   }
   handleDelete = (id: number)=>{
-    console.log('i am here')
     this.store.dispatch(deleteForumTheme({id: id}))
   }
 }
