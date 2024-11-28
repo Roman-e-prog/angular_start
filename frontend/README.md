@@ -292,14 +292,3 @@ it('should have a usermessage and set userdata on click in the form', (done) => 
   });
 });
 it('should have all Elements in the TopWrapper', () => { const greeting = fixture.debugElement.nativeElement.querySelector('.hallo'); expect(greeting).toBeTruthy(); expect(greeting.textContent.trim()).toEqual('RomanArmin'); const back = fixture.debugElement.nativeElement.querySelector('.back'); expect(back).toBeTruthy(); const locationSpy = spyOn(location, 'back'); back.click(); expect(locationSpy).toHaveBeenCalled(); });
-DB_PASSWORD="HOBBES14pebbles13_1a!"
-DB_HOST="postgresql"
-DB_NAME="angular_start"
-DB_USER="postgresql"
-DB_PORT=5432
-SERVERPORT=5000
-JWT_SEC=RAR2024
-JWT_REFRESH_SEC=RARREFRESHTOKEN
-CLOUDINARY_CLOUD_NAME=romandev
-CLOUDINARY_API_KEY=287864718363355
-CLOUDINARY_SECRET_KEY=gvCFgzPpW8K431Ksjt58s1WP-rQ
