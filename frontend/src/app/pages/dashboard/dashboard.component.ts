@@ -9,6 +9,8 @@ import { ForumThemeDashboardComponent } from '../../components/dashboardComponen
 import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
 import { ResizeObserverService } from '../../services_interceptors/resize.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../services_interceptors/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,13 +30,20 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
+    private authService: AuthService,
+    private router: Router,
     private resizeObserverService: ResizeObserverService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platFormId: Object,
   ){}
+  user = this.authService.getUser()
   windowWidth!:number;
   private resizeSubscription!: Subscription;
+  
   ngOnInit(): void {
+    if(!this.user && !this.user.is_admin){
+      this.router.navigate(['/'])
+    }
     if(isPlatformBrowser(this.platFormId)){
       this. resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{
         this.windowWidth = width;
