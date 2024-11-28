@@ -53,7 +53,6 @@ export class AdminMessagesDashboardComponent {
     combineLatest([this.isError$, this.isBlogmemberError$, this.isUsermessageError$]).subscribe(([isError, isBlogmemberError, isUsermessageError])=>{
       if(isError){
         this.message$.subscribe((message)=>{
-          console.log(message, '1')
           this.toastr.error(message)
         })
       }
@@ -64,7 +63,6 @@ export class AdminMessagesDashboardComponent {
       }
       else if(isUsermessageError){
         this.messageBlogmember$.subscribe((blogMemberErrorMessage)=>{
-          console.log(blogMemberErrorMessage, '3')
           this.toastr.error(blogMemberErrorMessage)
         })
       }

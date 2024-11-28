@@ -7,7 +7,7 @@
             <span class="date">Nachricht vom: {{usermessage.created_at | date: 'fullDate'}}</span>
             <p class="message">{{usermessage.message}}</p>
             <ng-icon name="matArrowBackOutline" class="answered" *ngIf="usermessage.is_answered"></ng-icon>
-            <ng-icon name="matDeleteOutline" class="icons" (click)="handleQuestionDelete(usermessage.id!)"></ng-icon>
+            <ng-icon name="matDeleteOutline" class="icons" id="usermessageDelete" (click)="handleQuestionDelete(usermessage.id!)"></ng-icon>
         </div>
     </div>
     <ng-template #noMessage>
@@ -15,8 +15,8 @@
     </ng-template>
     <div class="userList" *ngIf="(allBlogmembers$ | async)?.length; else noBlogmembers">
         <button class="displayBlogmembers" (click)="handleOpenBlogmembers()">
-            <span *ngIf="allBlogMember">Schließen</span>
-            <span *ngIf="!allBlogMember">Mitglieder anzeigen</span>
+            <span *ngIf="allBlogMember" id="hide">Schließen</span>
+            <span *ngIf="!allBlogMember" id="show">Mitglieder anzeigen</span>
         </button>
         <table class="userTable" *ngIf="allBlogMember">
             <thead class="head">
@@ -31,12 +31,12 @@
             </thead>
             <tbody class="body">
                 <tr *ngFor="let user of sortedBlogmembers$ | async" (click)="handleMessage(user.id!, user.username!)">
-                    <td>{{user.username}}</td>
-                    <td>{{user.id}}</td>
-                    <td>{{user.created_at | date: 'fullDate'}}</td>
-                    <td>{{user.vorname}}</td>
-                    <td>{{user.nachname}}</td>
-                    <td>{{user.email}}</td>
+                    <td id="blogmemberName">{{user.username}}</td>
+                    <td id="blogmemberId">{{user.id}}</td>
+                    <td id="blogmemberDate">{{user.created_at | date: 'fullDate'}}</td>
+                    <td id="blogmemberVorname">{{user.vorname}}</td>
+                    <td id="blogmemberNachname">{{user.nachname}}</td>
+                    <td id="blogmemberEmail">{{user.email}}</td>
                 </tr>
             </tbody>
         </table>
@@ -76,14 +76,14 @@
     <div class="displayAdminMessage" *ngIf="(allAdminmessages$ | async)?.length">
         <div class="fieldWrapper" *ngFor="let adminmessage of allAdminmessages$ | async">
             <span class="adminName">{{adminmessage.adminname}}</span>
-            <span class="date">Nachricht vom: {{adminmessage.created_at | date: 'fullDate'}}</span>
-            <p class="message">{{adminmessage.message}}</p>
+            <span class="date" id="adminMessageDate">Nachricht vom: {{adminmessage.created_at | date: 'fullDate'}}</span>
+            <p class="message" id="adminMessage">{{adminmessage.message}}</p>
             <p class="toUser">Nachricht an: {{adminmessage.username}}</p>
             <p class="toUserId">Nachricht an: {{adminmessage.user_id}}</p>
             <p class="userQuestion">Die Frage {{adminmessage.usermessage_id}}</p>
             <div class="iconWrapper">
-                <ng-icon name="matEditOutline" class="icons" (click)="handleMessageEdit(adminmessage)"></ng-icon>
-                <ng-icon name="matDeleteOutline" class="icons" (click)="handleMessageDelete(adminmessage.id!)"></ng-icon>
+                <ng-icon name="matEditOutline" class="icons" id="edit" (click)="handleMessageEdit(adminmessage)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" id="delete" (click)="handleMessageDelete(adminmessage.id!)"></ng-icon>
             </div>
         </div>
     </div>
