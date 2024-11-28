@@ -60,8 +60,8 @@ export class AccountComponent implements OnInit {
     })
     this.store.dispatch(getUserAdminMessages({id: parseInt(this.id!)}))
     this.store.dispatch(getAllUserQuestions({id: parseInt(this.id!)}))
-    this.updateUserForm.get('vorname')?.setValue(this.user &&this.user.vorname)
-    this.updateUserForm.get('nachname')?.setValue(this.user &&this.user.nachname)
+    this.updateUserForm.get('vorname')?.setValue(this.user && this.user.vorname)
+    this.updateUserForm.get('nachname')?.setValue(this.user && this.user.nachname)
   }
   //user
   user: Blogmember = this.authService.getUser();
