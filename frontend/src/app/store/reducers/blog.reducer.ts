@@ -24,7 +24,7 @@ export interface Blog {
     blog_theme: string,
     blog_author: string,
     cloudinary_ids?: string[],
-    images?: [],
+    images?: (string | File)[],
     created_at?: Date;
     updated_at?: Date;
 }
