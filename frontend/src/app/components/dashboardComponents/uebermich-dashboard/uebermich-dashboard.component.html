@@ -2,8 +2,8 @@
     <div class="displayUebermich" *ngFor="let uebermich of allUebermich$ | async">
             <p class="content">{{uebermich.my_person}}</p>
             <div class="iconWrapper">
-                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(uebermich)"></ng-icon>
-                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(uebermich.id!)"></ng-icon>
+                <ng-icon name="matEditOutline" class="icons" id="edit" (click)="handleEdit(uebermich)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" id="delete" (click)="handleDelete(uebermich.id!)"></ng-icon>
             </div>
     </div>
     <div class="formWrapper">
