@@ -5,8 +5,8 @@
             <h3 class="bibliothek_ressort">{{bibliothek.bibliothek_ressort}}</h3>
              <a [href]="bibliothek.bibliothek_url" class="link">{{bibliothek.bibliothek_url}}</a>
             <div class="iconWrapper">
-                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(bibliothek)"></ng-icon>
-                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(bibliothek.id!)"></ng-icon>
+                <ng-icon name="matEditOutline" class="icons" id="edit" (click)="handleEdit(bibliothek)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" id="delete" (click)="handleDelete(bibliothek.id!)"></ng-icon>
             </div>
         </div>
     </div>

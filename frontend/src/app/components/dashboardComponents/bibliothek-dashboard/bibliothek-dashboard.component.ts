@@ -64,7 +64,6 @@ export class BibliothekDashboardComponent {
   }
   //edit & delete
   handleDelete = (id:number)=>{
-    console.log('here delete')
     this.store.dispatch(deleteBibliothek({id: id}))
   }
   editModule = false;
