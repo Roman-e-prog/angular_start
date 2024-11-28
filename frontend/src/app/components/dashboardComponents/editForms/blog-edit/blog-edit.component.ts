@@ -34,14 +34,12 @@ export class BlogEditComponent implements OnInit{
    
   handleImages = (index:number, event: Event)=>{
     let file = (event.target as HTMLInputElement).files ? (event.target as HTMLInputElement).files![0] : null;
-    console.log(file, 'hier file')
     if(!file){
       return
     }
     const newImages = [...this.fileData]
     newImages[index] = file;
     this.fileData = [...newImages]
-    console.log(this.fileData)
   }
   blogEditForm = new FormGroup({
     blog_title: new FormControl('', Validators.required),
@@ -67,7 +65,6 @@ onSubmit = ()=>{
       else{
         const formdata = new FormData;
           this.fileData.forEach((image, index)=>{
-            console.log(this.fileData, 'here files', index);
             if(image instanceof File){
               formdata.append('images', image);
               formdata.append('index', index.toString())

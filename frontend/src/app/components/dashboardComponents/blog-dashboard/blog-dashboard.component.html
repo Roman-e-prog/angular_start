@@ -11,8 +11,8 @@
                 <img *ngFor="let image of blog.images; let i = index" [src]="image" alt="`Bild Nr.{index+1}`" class="blogImage">
             </div>
             <div class="iconWrapper">
-                <ng-icon name="matEditOutline" class="icons" (click)="handleEdit(blog)"></ng-icon>
-                <ng-icon name="matDeleteOutline" class="icons" (click)="handleDelete(blog.id!)"></ng-icon>
+                <ng-icon name="matEditOutline" class="icons" id="edit" (click)="handleEdit(blog)"></ng-icon>
+                <ng-icon name="matDeleteOutline" class="icons" id="delete" (click)="handleDelete(blog.id!)"></ng-icon>
             </div>
         </div>
     </div>
