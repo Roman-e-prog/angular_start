@@ -5,7 +5,7 @@
         <div class="linkWrapper">
             <ul class="forumLinks">
                 <li class="forumLi" *ngFor="let forumLink of forumLinks"><a [routerLink]="['/forum/' ,forumLink.name]" class="forumAnchor">{{forumLink.name}}</a></li>
-                <li class="forumLi" *ngIf="user"><a [routerLink]="['/account/', user.id]" class="forumAnchor">{{user.username}}</a></li>
+                <li class="forumLi" *ngIf="user"><a [routerLink]="['/account/', user.id]" class="forumAnchor" id="accountAnchor">{{user.username}}</a></li>
             </ul>
         </div>
         <div class="forumThemeWrapper">
