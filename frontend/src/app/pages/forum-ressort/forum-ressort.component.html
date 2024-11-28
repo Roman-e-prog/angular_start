@@ -21,11 +21,11 @@
                 </a>
                     <div class="likes">
                         <div class="hasLiked">
-                            <span>{{forum.likes! > 0 ? forum.likes : null}}</span>
+                            <span id="likes">{{forum.likes! > 0 ? forum.likes : null}}</span>
                             <ng-icon name="matThumbUpOutline" (click)="noLikes()"></ng-icon>
                         </div>
                         <div class="hasDisliked">
-                            <span>{{forum.dislikes! > 0 ? forum.dislikes : null}}</span>
+                            <span id="dislikes">{{forum.dislikes! > 0 ? forum.dislikes : null}}</span>
                             <ng-icon name="matThumbDownOutline" (click)="noLikes()"></ng-icon>
                         </div>
                         <div [ngClass]="forum.solved ? 'solved' : 'unsolved'">
@@ -36,7 +36,7 @@
             <div class="viewsWrapper">
                 <div class="viewsText">
                     <p>Gesehen von:</p>
-                    <p>{{forum.views}}</p>
+                    <p id="views">{{forum.views}}</p>
                 </div>
             </div>
         </div>

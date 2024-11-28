@@ -22,17 +22,17 @@
             </div>
             <div class="likes">
                 <div class="hasLikes">
-                    <span>{{forum.likes && forum.likes > 0 ? forum.likes: null}}</span>
+                    <span id="likes">{{forum.likes && forum.likes > 0 ? forum.likes: null}}</span>
                     <ng-icon class="icons" (click)="handleLikes(forum.id!, forum.user_id!, forum.dislike_ids!, forum.like_ids!)" name="matThumbUpOutline"></ng-icon>
                 </div>
                 <div class="hasDislikes">
-                    <span>{{forum.dislikes && forum.dislikes > 0 ? forum.dislikes: null}}</span>
+                    <span id="dislikes">{{forum.dislikes && forum.dislikes > 0 ? forum.dislikes: null}}</span>
                     <ng-icon class="icons" (click)="handleDislikes(forum.id!, forum.user_id!, forum.dislike_ids!, forum.like_ids!)" name="matThumbDownOutline"></ng-icon>
                 </div>
                 <div [ngClass]="forum.solved ? 'solved': 'unsolved'">
                     <ng-icon name="matCheckBoxOutline"></ng-icon>
                 </div>
-                <div  class="icons" (click)="handleReply(forum.id!)">
+                <div id="reply" class="icons" (click)="handleReply(forum.id!)">
                     <ng-icon name="matReplyOutline"></ng-icon>
                 </div>
                 <div *ngIf="user && user.id === forum.user_id || user && user.is_admin"  class="icons">

@@ -5,7 +5,6 @@ import { Observable, Subscription, tap } from 'rxjs';
 import { ForumTheme } from '../../store/reducers/forumTheme.reducer';
 import { selectAllForumThemeData, selectForumThemeError, selectForumThemeLoading, selectForumThemeMessage } from '../../store/selectors/forumTheme.selectors';
 import { getAllForumTheme } from '../../store/actions/forumtheme.actions';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -13,6 +12,7 @@ import { AuthService } from '../../services_interceptors/auth.service';
 import { Blogmember } from '../../store/reducers/blogMember.reducer';
 import { ResizeObserverService } from '../../services_interceptors/resize.service';
 import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
+import { ForumLinksService } from '../../services_interceptors/forumlinks.service';
 interface ForumLink{
   name: string,
   url: string
@@ -28,7 +28,7 @@ export class ForumComponent implements OnInit, OnDestroy{
   constructor(
               private store: Store, 
               private toastr: ToastrService, 
-              private httpClient: HttpClient, 
+              private forumLinksService: ForumLinksService, 
               private authService: AuthService,
               private cd: ChangeDetectorRef,
               private resizeObserverService: ResizeObserverService,
@@ -59,7 +59,7 @@ export class ForumComponent implements OnInit, OnDestroy{
       })
     ).subscribe();
     this.store.dispatch(getAllForumTheme())
-    this.httpClient.get<ForumLink[]>('assets/forumlinks.json').subscribe({
+    this.forumLinksService.getForumLinks().subscribe({
       next:(response)=>{
         this.forumLinks = response
       },

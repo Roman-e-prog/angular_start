@@ -65,9 +65,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return password === passwordConfirm ? null : { passwordsMismatch: true };
     }
   onSubmit(): void {
+    console.log('triggered')
+    console.log(this.registerForm.value, 'in the form')
+    console.log(this.registerForm.errors)
+    console.log(this.registerForm.valid)
     if (this.registerForm.valid) {
       const newUser = this.registerForm.value;
-
+        console.log(newUser, 'after test')
       this.httpClient.post('http://localhost:5000/api/auth/register', newUser).subscribe({
         next: (response) => {
           this.router.navigate(['/login']);
