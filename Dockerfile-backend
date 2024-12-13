@@ -5,21 +5,17 @@ RUN apk add --no-cache postgresql-client
 
 WORKDIR /usr/src/app
 
-#copy package.json
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
-# Set npm registry and increase timeout
-# RUN npm config set registry https://registry.npmmirror.com
-RUN npm config set fetch-timeout 600000
-
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install --loglevel=error
+
 #copy entire app
 COPY . .
 ENV NODE_ENV=production
 
 EXPOSE 5000
-RUN npm install -g gulp-cli # Install Gulp globally
+RUN npm install -g gulp-cli
 RUN npm install -g gulp
 RUN chown -R node /usr/src/app
 USER node

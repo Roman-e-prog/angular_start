@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-backend
-    command: ["npm", "run", "backend-build"]
+    command: ['npm', 'run', 'backend-build']
     environment:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -12,6 +12,7 @@ services:
       - DB_NAME=${DB_NAME}
       - SERVERPORT=5000
       - JWT_SEC=${JWT_SEC}
+      - JWT_REFRESH_SEC=${JWT_REFRESH_SEC}
       - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
       - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
       - CLOUDINARY_SECRET_KEY=${CLOUDINARY_SECRET_KEY}
@@ -30,6 +31,7 @@ services:
         limits:
           cpus: "0.50" 
           memory: "1.5G"
+
   postgres:
     image: 'postgres'
     restart: 'always'
@@ -43,7 +45,7 @@ services:
       - DB_Port=5432
       - DB_NAME=${DB_NAME}
       - JWT_SEC=${JWT_SEC}
-       - NODE_ENV="production"
+      - JWT_REFRESH_SEC=${JWT_REFRESH_SEC}
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=postgres
@@ -93,7 +95,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: '1.2G'
+          memory: '2G'
 
 networks: 
   customnetwork:
