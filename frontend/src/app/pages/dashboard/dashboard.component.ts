@@ -41,9 +41,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private resizeSubscription!: Subscription;
   
   ngOnInit(): void {
-    if(!this.user && !this.user.is_admin){
+    if(this.user){
+      if(!this.user.is_admin){
+        this.router.navigate(['/'])
+      }
+    }
+    else{
       this.router.navigate(['/'])
     }
+  
     if(isPlatformBrowser(this.platFormId)){
       this. resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{
         this.windowWidth = width;

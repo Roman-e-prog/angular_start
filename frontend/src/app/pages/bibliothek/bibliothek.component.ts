@@ -105,7 +105,6 @@ export class BibliothekComponent implements OnInit, OnDestroy {
 
   }
   getStyles = (slideIndex:number, one:number, two:number, three: number)=>{
-    console.log(this.playerWidth)
     const fullWidth = {
       minWidth:`${three}px`,
       transform:`translateX(${slideIndex * - three}px)`,

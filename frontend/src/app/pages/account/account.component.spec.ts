@@ -85,14 +85,14 @@ describe('AccountComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should greet the user', ()=>{
+  it('should greet the user', ()=>{
     const greeting = fixture.debugElement.nativeElement.querySelector('.greeting');
     const hallo = fixture.debugElement.nativeElement.querySelector('.hallo');
 
     expect(greeting).toBeTruthy();
     expect(hallo.textContent.trim()).toEqual('Hallo RomanArmin')
   });
-  fit('backButton should work', ()=>{
+  it('backButton should work', ()=>{
     const goBackSpy = spyOn(location, 'back')
     const goBack = fixture.debugElement.nativeElement.querySelector('.goBack');
     expect(goBack).toBeTruthy();
@@ -100,7 +100,7 @@ describe('AccountComponent', () => {
     fixture.detectChanges();
     expect(goBackSpy).toHaveBeenCalled();
   });
-  fit('should have adminMessages', async ()=>{
+  it('should have adminMessages', async ()=>{
     memoizedUserAdminMessageSelector.setResult([
       {
         id: 1,
@@ -126,12 +126,12 @@ describe('AccountComponent', () => {
       expect(adminname.textContent.trim()).toEqual('Gruß RomanArmin');
     })
   });
-  fit('should have no adminMessages', ()=>{
+  it('should have no adminMessages', ()=>{
     const noMessage = fixture.debugElement.nativeElement.querySelector('.noMessage');
     expect(noMessage).toBeTruthy();
     expect(noMessage.textContent.trim()).toEqual('Sie haben derzeit keine Nachrichten')
   });
-  fit('userQuestion should work on button click', async ()=>{
+  it('userQuestion should work on button click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const accountManagement = fixture.debugElement.nativeElement.querySelector('.accountManagement');
     expect(accountManagement).toBeTruthy();
@@ -169,7 +169,7 @@ describe('AccountComponent', () => {
       })
     })
   });
-  fit('test the closeModule',async ()=>{
+  it('test the closeModule',async ()=>{
       const accountManagement = fixture.debugElement.nativeElement.querySelector('.accountManagement');
     expect(accountManagement).toBeTruthy();
       //closeModule works
@@ -193,7 +193,7 @@ describe('AccountComponent', () => {
       expect(warn).toBeFalsy();
       })
   });
-  fit('user should be able to delete his account', async ()=>{
+  it('user should be able to delete his account', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const accountManagement = fixture.debugElement.nativeElement.querySelector('.accountManagement');
     expect(accountManagement).toBeTruthy();
@@ -220,7 +220,7 @@ describe('AccountComponent', () => {
       })
     })
   });
-  fit('should see his questions', async ()=>{
+  it('should see his questions', async ()=>{
     memoizedUserQuestionSelector.setResult([
       {
         id: 1,
@@ -250,7 +250,7 @@ describe('AccountComponent', () => {
       expect(counter.textContent.trim()).toEqual('0');
     })
   });
-  fit('should be able to update his data', async ()=>{
+  it('should be able to update his data', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const updateUserForm = fixture.debugElement.nativeElement.querySelector('.updateUserForm');
     const vorname = fixture.debugElement.nativeElement.querySelector('#vorname');

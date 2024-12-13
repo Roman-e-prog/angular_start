@@ -1,4 +1,4 @@
-@import '../../../variables';
+@use '../../../variables' as *;
 .container{
     @include container;
     & .generalTitle, .title{
@@ -30,6 +30,10 @@
         & .text{
             flex:1;
             padding: 5px;
+            & .btitle{
+                color: $fontColor;
+                margin: 10px 20px;
+            }
         }
     }
 
