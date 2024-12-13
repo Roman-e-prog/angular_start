@@ -82,6 +82,10 @@ export const forumAnswerLikesCount = async (req:Request, res:Response)=>{
         await pool.query(
             "UPDATE forumAnswers SET likes = likes + 1, like_ids = array_append(like_ids, $2) WHERE id = $1",[id, user_id]
         )
+        const result = await pool.query(
+            "SELECT * FROM forumAnswers WHERE id = $1", [id]
+        )
+        res.status(200).json(result.rows[0]);
     } catch(error){
         res.status(404).json('Not found')
     }
@@ -89,12 +93,18 @@ export const forumAnswerLikesCount = async (req:Request, res:Response)=>{
 export const forumAnswerDislikesCount = async (req:Request, res:Response)=>{
     const id = req.body.id
     const user_id = req.body.user_id
+    if (!id || !user_id) {
+        return
+      }
     try{
         await pool.query(
             "UPDATE forumAnswers SET dislikes = dislikes + 1, dislike_ids = array_append(dislike_ids, $2) WHERE id = $1",[id, user_id]
         )
+        const result = await pool.query(
+            "SELECT * FROM forumAnswers WHERE id = $1", [id]
+        )
+        res.status(200).json(result.rows[0]);
     } catch(error){
-        console.log(error)
         res.status(404).json('Not found')
     }
 }
@@ -108,6 +118,7 @@ export const forumAnswerSolved = async (req:Request, res:Response)=>{
         await pool.query(
             "UPDATE forum SET solved = true WHERE id = $1",[question_id]
         )
+        res.status(200).json({ success: true, message: 'hasSolved updated successfully' });
     } catch(error){
         res.status(404).json('Not found')
     }

@@ -21,7 +21,6 @@ export const updateUebermich = async (req:Request, res:Response)=>{
             )
             res.status(200).json(result.rows[0])
         } catch(error){
-            console.log(error)
             res.status(404).json('Nicht gefunden')
         }
 }

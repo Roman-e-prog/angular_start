@@ -4,7 +4,6 @@ import { Request, Response, NextFunction } from 'express';
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const sec: string = process.env.JWT_SEC as string;
     const authHeader = req.headers['authorization'];
-    // const newAuthHeader = req.headers['newAuthorization']
     if (authHeader) {
         const token = (authHeader as string).split(' ')[1];
         jwt.verify(token, sec, async (err: any, user: any) => {

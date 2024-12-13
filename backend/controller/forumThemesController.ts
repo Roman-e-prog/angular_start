@@ -4,7 +4,6 @@ export const createForumtheme = async (req:Request, res:Response)=>{
     const {ressort,
             title,
             content,} = req.body;
-            console.log(req.body, 'here body')
         try{
             const result = await pool.query(
                 "INSERT INTO forumthemes (ressort, title, content, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *",[ressort, title, content, new Date(new Date().toISOString()), new Date(new Date().toISOString())]
@@ -57,7 +56,6 @@ export const getAllForumthemes = async (req:Request, res:Response)=>{
             )
             res.status(200).json(result.rows)
         } catch(error){
-            console.log(error)
             res.status(404).json('Nicht gefunden')
         }
 }

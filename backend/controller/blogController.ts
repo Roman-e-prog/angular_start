@@ -1,6 +1,8 @@
 import pool from '../db/dbconnect';
 import {Request, Response} from 'express';
 import cloudinary from '../utils/cloudinary';
+import fs from 'fs';
+import path from 'path';
 export const createBlog = async (req:Request, res:Response)=>{
     const {blog_title, blog_content, blog_theme, blog_author} = req.body;
     const files = req.files as Express.Multer.File[];
@@ -16,6 +18,10 @@ export const createBlog = async (req:Request, res:Response)=>{
             })
             cloudinary_ids.push(result.public_id);
             secure_urls.push(result.secure_url);
+            // Delete the file after successful upload
+                fs.unlink(path, (err) => {
+                if (err) console.error(`Failed to delete file ${path}:`, err);
+            });
         }
         try{
             const result = await pool.query(
@@ -73,6 +79,9 @@ export const updateBlog = async (req:Request, res:Response)=>{
                 if(storedBlogpost && storedBlogpost.cloudinary_ids){
                     storedBlogpost.cloudinary_ids[fileIndex] = uploadResult.public_id
                 }
+                fs.unlink(path, (err) => {
+                    if (err) console.error(`Failed to delete file ${path}:`, err);
+                });
         }
         try{
             const result = await pool.query(

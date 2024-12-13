@@ -67,6 +67,7 @@ export const forumViewsCount = async (req:Request, res:Response)=>{
         await pool.query(
             "UPDATE forum SET views = views + 1 WHERE id = $1",[id]
         )
+        res.status(200).json({ success: true, message: 'Views incremented successfully' });
     } catch(error){
         res.status(404).json('Not found')
     }
@@ -78,6 +79,9 @@ export const forumLikesCount = async (req:Request, res:Response)=>{
         await pool.query(
             "UPDATE forum SET likes = likes + 1, like_ids = array_append(like_ids, $2) WHERE id = $1",[id, user_id]
         )
+        const result = await pool.query(
+            "SELECT * FROM forum WHERE id = $1", [id])
+        res.status(200).json(result.rows[0].likes);
     } catch(error){
         res.status(404).json('Not found')
     }
@@ -89,6 +93,9 @@ export const forumDislikesCount = async (req:Request, res:Response)=>{
         await pool.query(
             "UPDATE forum SET dislikes = dislikes + 1, dislike_ids = array_append(dislike_ids, $2) WHERE id = $1",[id, user_id]
         )
+        const result = await pool.query(
+            "SELECT * FROM forum WHERE id = $1", [id])
+        res.status(200).json(result.rows[0].dislikes);
     } catch(error){
         res.status(404).json('Not found')
     }

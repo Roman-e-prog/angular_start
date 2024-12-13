@@ -32,9 +32,10 @@ export const register = async (req:Request, res:Response)=>{
 //token functions
 const sec = process.env.JWT_SEC as string;
 const refreshSec = process.env.JWT_REFRESH_SEC as string;
-const generateAccessToken = (user: object) => { return jwt.sign(user, sec, { expiresIn: '30d' }); }; 
+const generateAccessToken = (user: object) => { return jwt.sign(user, sec, { expiresIn: '5m' }); }; 
 const generateRefreshToken = (user:object) => { return jwt.sign(user, refreshSec, { expiresIn: '7d' }); };
-export const login = async(req:Request, res:Response)=>{
+
+export const login = async (req:Request, res:Response)=>{
     const username = req.body.username
     const email = req.body.email
     try{
@@ -59,29 +60,30 @@ export const login = async(req:Request, res:Response)=>{
                         id:user.id,
                         is_admin:user.is_admin
                     })
-                    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
 
                         const {id, vorname, nachname, username, email, is_admin, profile_picture, created_at,updated_at} = results.rows[0]
                         res.status(200).json({id, vorname, nachname, username, email, is_admin, profile_picture, created_at,updated_at, accessToken, refreshToken})
+                    }
                 }
             }
-        }
-    )
+        )
     } catch(error){
-        console.log(error)
         res.status(403).json("Kein Login möglich")
     }
 }
 export const refreshToken = (req: Request, res: Response)=>{
-    const refreshSec = process.env.JWT_REFRESH_SEC as string;
-    const refreshToken = req.cookies.refreshToken
-    console.log(refreshToken, 'i get one from the cookie')
-    if (!refreshToken) return res.status(401).json("Not authenticated");
-    jwt.verify(refreshToken, refreshSec, (err: any, user:any) => { 
-        if (err) return res.status(403).json("Invalid refresh token"); 
-        const newAccessToken = generateAccessToken({ id: user.id, is_admin: user.is_admin }); 
-        res.status(200).json({ accessToken: newAccessToken }); 
-    });
+    try{
+        const refreshSec = process.env.JWT_REFRESH_SEC as string;
+        const refreshToken = req.body.refresh_token
+        if (!refreshToken) return res.status(401).json("Not authenticated");
+        jwt.verify(refreshToken, refreshSec, async (err: any, user:any) => { 
+            if (err) return res.status(403).json("Invalid refresh token"); 
+            const newAccessToken = generateAccessToken({ id: user.id, is_admin: user.is_admin }); 
+            res.status(200).json({ accessToken: newAccessToken }); 
+        });
+    } catch(error){
+        res.status(404).json('No refreshtoken found')
+    }
 }
 //verify username and email
 export const uniqueUsername = async (req:Request, res:Response)=>{
