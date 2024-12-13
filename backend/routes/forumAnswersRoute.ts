@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import { createForumAnswer, deleteForumAnswer, forumAnswerDislikesCount, forumAnswerLikesCount, forumAnswerSolved, getAllAnswersToQuestion, getAllForumAnswers, getForumAnswer, updateForumAnswer } from '../controller/forumAnswersController';
-import { verifyToken } from '../middleWares/jwtVerify';
 
 
 const forumAnswersRouter = Router();

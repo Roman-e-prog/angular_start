@@ -5,9 +5,9 @@ import { verifyTokenAndAdmin } from '../middleWares/jwtVerify';
 
 const blogRouter = Router();
 
-blogRouter.post('/', upload.array('images'), createBlog);
-blogRouter.put('/:id', upload.array('images'), updateBlog);
-blogRouter.delete('/:id', deleteBlogpost);
+blogRouter.post('/', verifyTokenAndAdmin, upload.array('images'), createBlog);
+blogRouter.put('/:id', verifyTokenAndAdmin, upload.array('images'), updateBlog);
+blogRouter.delete('/:id', verifyTokenAndAdmin, deleteBlogpost);
 blogRouter.get('/find/:id', getBlogpost);
 blogRouter.get('/find', getAllBlogposts);
 
