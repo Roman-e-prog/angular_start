@@ -49,7 +49,7 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all the fields and elements', ()=>{
+  it('should have all the fields and elements', ()=>{
     const loginForm = fixture.debugElement.nativeElement.querySelector(".loginForm");
     const username = fixture.debugElement.nativeElement.querySelector("#username");
     const email = fixture.debugElement.nativeElement.querySelector("#email");
@@ -64,13 +64,13 @@ describe('LoginComponent', () => {
     expect(mainBtn).toBeTruthy();
     expect(forgotten).toBeTruthy();
   })
-  fit('should warn the user when try to use forggotten with out email', ()=>{
+  it('should warn the user when try to use forgotten without email', ()=>{
     const forgotten = fixture.debugElement.nativeElement.querySelector(".forgotten");
     forgotten.click();
     fixture.detectChanges();
     expect("Bitte geben Sie Ihre Email ein, um das Password zurückzusetzen").toBeTruthy();
   })
-  fit("test the user is logged in", ()=>{
+  it("test the user is logged in", ()=>{
     const routerSpy = spyOn(router, 'navigate');
     const mockedUser = {
       vorname:"Roman",
@@ -92,7 +92,7 @@ describe('LoginComponent', () => {
       req.flush(mockedUser);
       expect(routerSpy).toHaveBeenCalledWith(['/dashboard'])
   })
-  fit("test the forgotten is called", async ()=>{
+  it("test the forgotten is called", async ()=>{
     const loginForm = fixture.debugElement.nativeElement.querySelector(".loginForm");
     component.loginForm.controls['username'].setValue("RomanArmin");
     component.loginForm.controls['email'].setValue("roman.rostock@gmail.com");

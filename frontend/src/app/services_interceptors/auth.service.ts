@@ -3,30 +3,31 @@ import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-
+import { Blogmember } from '../store/reducers/blogMember.reducer';
+import {environment} from '../environments/environment'
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
    
-  private userSubject: BehaviorSubject<any>;
-  public user: Observable<any>;
+  private userSubject: BehaviorSubject<Blogmember | null>;
+  public user: Observable<Blogmember | null>;
   constructor(private router: Router, private httpClient: HttpClient, private toastr: ToastrService) {
-    let user;
+    let user: Blogmember | null = null;
     if(typeof window !== 'undefined'){
         user = JSON.parse(localStorage.getItem('user')!);
     }
-    this.userSubject = new BehaviorSubject<any>(user);
+    this.userSubject = new BehaviorSubject<Blogmember | null>(user);
     this.user = this.userSubject.asObservable(); 
     
   }
 
-  public get userValue(): any {
+  public get userValue(): Blogmember | null {
     return this.userSubject.value;
   }
 
-  login(username: string, email: string, password: string): Observable<any> {
-    return this.httpClient.post('http://localhost:5000/api/auth/login', { username, email, password }).pipe(
+  login(username: string, email: string, password: string): Observable<Blogmember> {
+    return this.httpClient.post<Blogmember>(`${environment.apiURL}api/auth/login`, { username, email, password }).pipe(
       map((response: any) => {
         if (typeof response === 'string') {
           this.toastr.error(response);
@@ -60,21 +61,9 @@ export class AuthService {
     this.router.navigate(['/']);
     }
   }
-  currentUser = this.getUser()
-  refreshToken() { return this.httpClient.post('http://localhost:5000/api/auth/refreshToken', {});}
-  // refreshToken() {
-  //   return this.httpClient.post<any>('http://localhost:5000/api/auth/refreshToken', {id: this.currentUser.id}).subscribe({
-  //     next: (response)=>{
-  //       this.currentUser.accessToken = response;
-  //       localStorage.setItem('user', JSON.stringify(this.currentUser))
-  //       this.userSubject.next(this.currentUser);
-  //         return this.currentUser;
-  //     },
-  //     error: (error)=>{
-  //       this.toastr.error(error);
-  //       this.logout();
-  //       this.router.navigate(['/login'])
-  //     }
-  //   })
-  // }
+  refreshToken() { 
+    const user = JSON.parse(localStorage.getItem('user')!);
+    const refresh_token = user.refreshToken
+    return this.httpClient.post(`${environment.apiURL}api/auth/refreshToken`, {refresh_token});
+  }
 }

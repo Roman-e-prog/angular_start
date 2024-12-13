@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {ofType, createEffect, Actions} from '@ngrx/effects'
 import { Store } from "@ngrx/store";
+import {environment} from '../../environments/environment'
 import {
     createBlog,
     createBlogSuccess,
@@ -24,8 +25,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class BlogEffect{
-api_url = 'http://localhost:5000/api/blog/';
-
+api_url = `${environment.apiURL}api/blog/`;
 createBlog$ = createEffect(()=>
     this.actions$.pipe(
         ofType(createBlog),

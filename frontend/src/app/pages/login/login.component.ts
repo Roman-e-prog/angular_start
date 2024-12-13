@@ -39,7 +39,7 @@ ngOnInit(): void {
       else{
         this.router.navigate(['/'])
       }
-    }
+    } 
    })
    if(isPlatformBrowser(this.platFormId)){
     this.resizeSubscription = this.resizeObserverService.resize$.subscribe((width)=>{

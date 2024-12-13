@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {ofType, createEffect, Actions} from '@ngrx/effects'
 import { Store } from "@ngrx/store";
+import {environment} from '../../environments/environment'
 import {
     createAdminMessage,
     createAdminMessageSuccess,
@@ -27,7 +28,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class AdminMessagesEffect{
-api_url = 'http://localhost:5000/api/adminmessages/';
+api_url = `${environment.apiURL}api/adminmessages/`;
 
 createAdminMessage$ = createEffect(()=>
     this.actions$.pipe(

@@ -7,6 +7,7 @@ import { provideToastr, ToastrService } from 'ngx-toastr';
 import { MemoizedSelector } from '@ngrx/store';
 import { Uebermich, UebermichState } from '../../store/reducers/uebermich.reducer';
 import { selectAllUebermichData } from '../../store/selectors/uebermich.selectors';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 
 describe('UebermichComponent', () => {
   let component: UebermichComponent;
@@ -14,6 +15,7 @@ describe('UebermichComponent', () => {
   let mockStore: MockStore;
   let mockUebermichSelector: MemoizedSelector<UebermichState, Uebermich[]>;
   let toastr:ToastrService;
+  let httpClient: HttpClient;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -24,6 +26,7 @@ describe('UebermichComponent', () => {
         provideIcons({}),
         provideMockStore(),
         provideToastr(),
+        provideHttpClient()
       ]
     })
     .compileComponents();
@@ -32,6 +35,7 @@ describe('UebermichComponent', () => {
     mockStore = TestBed.inject(MockStore);
     mockUebermichSelector = mockStore.overrideSelector(selectAllUebermichData,[])
     toastr = TestBed.inject(ToastrService);
+    httpClient = TestBed.inject(HttpClient);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

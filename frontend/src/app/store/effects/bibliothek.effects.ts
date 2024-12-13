@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {ofType, createEffect, Actions} from '@ngrx/effects'
 import { Store } from "@ngrx/store";
+import {environment} from '../../environments/environment'
 import {
     createBibliothek,
     createBibliothekSuccess,
@@ -24,7 +25,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class BibliothekEffect{
-api_url = 'http://localhost:5000/api/bibliothek/';
+api_url = `${environment.apiURL}api/bibliothek/`;
 
 createBibliothek$ = createEffect(()=>
     this.actions$.pipe(

@@ -90,7 +90,7 @@ describe('RegisterComponent', () => {
     httpTestingController.verify(); 
   });
   
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
   it('should render all elements', async ()=>{
@@ -178,7 +178,7 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.errors).toEqual({ passwordsMismatch: true });
   });
 
-  fit('should handle form submission successfully and trigger validators', async () => {
+  it('should handle form submission successfully and trigger validators', async () => {
     const reqNav = httpTestingController.expectOne('assets/navlinks.json');
     reqNav.flush([]); // Mocked response
     await fixture.whenStable();

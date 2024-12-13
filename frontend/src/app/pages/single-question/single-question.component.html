@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="answerWrapper">
+    <div class="answerWrapper" *ngIf="(allAnswersToQuestion$ | async)?.length">
         <div class="fieldWrapper" *ngFor="let answer of allAnswersToQuestion$ | async">
             <div class="name">
                 <p class="username">{{answer.username}}</p>
@@ -71,7 +71,7 @@
                     <ng-icon name="matEditOutline" class="icons" (click)="handleAnswerEdit(answer)"></ng-icon>
                 </div>
                 <div *ngIf="user && user.is_admin" class="icons">
-                    <ng-icon name="matDeleteOutline" class="icons" (click)="handleAnswerDelete(answer.id!)"></ng-icon>
+                    <ng-icon name="matDeleteOutline" class="icons" (click)="handleAnswerDelete(answer.id!, answer.question_id)"></ng-icon>
                 </div>
             </div>
     </div>

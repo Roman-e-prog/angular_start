@@ -69,8 +69,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.registerForm.valid) {
       const {vorname, nachname, username, email, password} = this.registerForm.value;
-        console.log(vorname, nachname, username, email, password, 'after test')
-        console.log(this.registerForm.valid);
       this.registerService.registerUser(vorname, nachname, username, email, password).subscribe({
         next: (response) => {
           this.router.navigate(['/login']);
