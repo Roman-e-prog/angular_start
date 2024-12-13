@@ -50,7 +50,7 @@ describe('ForumThemeDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all its elements', async ()=>{
+  it('should have all its elements', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -86,7 +86,7 @@ describe('ForumThemeDashboardComponent', () => {
       expect(content.textContent.trim()).toEqual('Lorem Ipsum Ad Dolores');
       expect(title.textContent.trim()).toEqual('Forumthema einpflegen')
   }),
-  fit('form should get values and send them', ()=>{
+  it('form should get values and send them', ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const forumThemeForm = fixture.debugElement.nativeElement.querySelector('.forumThemeForm');
     const titleInput = fixture.debugElement.nativeElement.querySelector('#title');
@@ -111,7 +111,7 @@ describe('ForumThemeDashboardComponent', () => {
                       }
     }))
   })
-  fit('should open edit Form on click', async ()=>{
+  it('should open edit Form on click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch');
     memoizedSelector.setResult([
       {
@@ -153,7 +153,7 @@ describe('ForumThemeDashboardComponent', () => {
       }}))
     })
   });
-  fit('should delete on click', async ()=>{
+  it('should delete on click', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,

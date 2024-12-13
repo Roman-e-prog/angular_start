@@ -3,4 +3,5 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
+  .then(() => console.log('Client-Side App Bootstrapped'))
   .catch((err) => console.error(err));

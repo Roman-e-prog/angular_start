@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@use '../../../../variables' as *;
 .container{
     width: 80%;
     margin: 10px auto;

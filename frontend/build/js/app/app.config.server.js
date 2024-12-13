@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.config=void 0;var _core=require("@angular/core"),_platformServer=require("@angular/platform-server"),_app=require("./app.config");const serverConfig={providers:[(0,_platformServer.provideServerRendering)()]},config=exports.config=(0,_core.mergeApplicationConfig)(_app.appConfig,serverConfig);

@@ -12,6 +12,7 @@ import { ForumRessortComponent } from './pages/forum-ressort/forum-ressort.compo
 import { SingleBlogComponent } from './pages/single-blog/single-blog.component';
 import { SingleQuestionComponent } from './pages/single-question/single-question.component';
 import { ResetComponent } from './pages/reset/reset.component';
+import { FallbackComponent } from './pages/fallback/fallback.component';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent, pathMatch: 'full'},
@@ -26,5 +27,6 @@ export const routes: Routes = [
     {path: "blog/:id", component: SingleBlogComponent },
     {path: "forum/:name", component: ForumRessortComponent},
     {path: "reset/:token", component: ResetComponent},
-    {path:"forum/:ressort/:id", component:SingleQuestionComponent}
+    {path:"forum/:ressort/:id", component:SingleQuestionComponent},
+    {path:"**", component:FallbackComponent},
 ];

@@ -1,0 +1,1 @@
+"use strict";var _platformBrowser=require("@angular/platform-browser"),_app=require("./app/app.config"),_app2=require("./app/app.component");(0,_platformBrowser.bootstrapApplication)(_app2.AppComponent,_app.appConfig).then((()=>console.log("Client-Side App Bootstrapped"))).catch((p=>console.error(p)));

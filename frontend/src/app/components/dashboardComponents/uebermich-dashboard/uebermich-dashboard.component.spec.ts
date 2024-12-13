@@ -50,7 +50,7 @@ describe('UebermichDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all its components', async ()=>{
+  it('should have all its components', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -74,7 +74,7 @@ describe('UebermichDashboardComponent', () => {
     expect(content.textContent.trim()).toEqual('Lorem Ipsum');
     expect(title.textContent.trim()).toEqual('Uebermich Daten einpflegen')
   })
-  fit('form should get values and send them', ()=>{
+  it('form should get values and send them', ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const uebermichForm = fixture.debugElement.nativeElement.querySelector('.uebermichForm');
     const my_person = fixture.debugElement.nativeElement.querySelector('#my_person');
@@ -86,7 +86,7 @@ describe('UebermichDashboardComponent', () => {
     
     expect(spyDispatch).toHaveBeenCalledWith(createUebermich({uebermichData:{my_person:"Lorem Ipsum Ad Dolores"}}))
   })
-  fit('should open edit Form on click', async ()=>{
+  it('should open edit Form on click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     memoizedSelector.setResult([
       {
@@ -116,7 +116,7 @@ describe('UebermichDashboardComponent', () => {
 
     })
   });
-  fit('should delete on click', async ()=>{
+  it('should delete on click', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,

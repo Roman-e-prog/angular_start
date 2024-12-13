@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@use '../../../../variables' as *;
 .container{
     @include container;
 }
@@ -21,6 +21,9 @@
     padding: 2px;
     border: 1px solid $fontColor;
     margin: 5px;
+    @include responsive(x){
+        width:45%;
+    }
     @include responsive(m){
         width:80%;
     }

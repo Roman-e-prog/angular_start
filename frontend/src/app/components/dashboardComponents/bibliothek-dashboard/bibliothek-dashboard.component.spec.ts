@@ -50,7 +50,7 @@ describe('BibliothekDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all its elements', async ()=>{
+  it('should have all its elements', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -88,7 +88,7 @@ describe('BibliothekDashboardComponent', () => {
       expect(bibliothekUrl.href).toEqual('https://www.youtube.com/watch?v=NpEaa2P7qZI');
       expect(title.textContent.trim()).toEqual('Bibliothek einpflegen')
   }),
-  fit('form should get values and send them', ()=>{
+  it('form should get values and send them', ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const title = fixture.debugElement.nativeElement.querySelector('.title');
     const bibliothekForm = fixture.debugElement.nativeElement.querySelector('.bibliothekForm');
@@ -114,7 +114,7 @@ describe('BibliothekDashboardComponent', () => {
                       }
     }))
   })
-  fit('should open edit Form on click', async ()=>{
+  it('should open edit Form on click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch');
     memoizedSelector.setResult([
       {
@@ -156,7 +156,7 @@ describe('BibliothekDashboardComponent', () => {
       }}))
     })
   });
-  fit('should delete on click', async ()=>{
+  it('should delete on click', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,

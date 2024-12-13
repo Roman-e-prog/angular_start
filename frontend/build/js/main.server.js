@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _platformBrowser=require("@angular/platform-browser"),_app=require("./app/app.component"),_appConfig=require("./app/app.config.server");const bootstrap=()=>(0,_platformBrowser.bootstrapApplication)(_app.AppComponent,_appConfig.config);var _default=exports.default=bootstrap;

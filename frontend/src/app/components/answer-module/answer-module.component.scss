@@ -1,5 +1,5 @@
-@import '../../../variables';
-@import 'highlight.js/styles/github.css';
+@use '../../../variables' as *;
+// @import 'highlight.js/styles/github.css';
 .container{
     width: 80%;
     margin: 10px auto;

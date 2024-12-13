@@ -82,7 +82,7 @@ describe('AdminMessagesDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all its elements', async ()=>{
+  it('should have all its elements', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -186,7 +186,7 @@ describe('AdminMessagesDashboardComponent', () => {
       expect(userQuestion).toBeTruthy();
       expect(userQuestion.textContent.trim()).toEqual('Die Frage 1');
   }),
-  fit('form should get values and send them', ()=>{
+  it('form should get values and send them', ()=>{
     memoizedUsermessageSelector.setResult([
       {
         id: 1,
@@ -227,7 +227,7 @@ describe('AdminMessagesDashboardComponent', () => {
                       }
     }))
   })
-  fit('should open edit Form on click', async ()=>{
+  it('should open edit Form on click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch');
     memoizedSelector.setResult([
       {
@@ -263,7 +263,7 @@ describe('AdminMessagesDashboardComponent', () => {
       }}))
     })
   });
-  fit('should delete on click', async ()=>{
+  it('should delete on click', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -285,7 +285,7 @@ describe('AdminMessagesDashboardComponent', () => {
     deleteButton.click();
     expect(dispatchSpy).toHaveBeenCalledWith(deleteAdminMessage({id: 1}))
   })
-  fit('should displayUser on button click', async ()=>{
+  it('should displayUser on button click', async ()=>{
     memoizedBlogmemberSelector.setResult([
       {
         id: 2,

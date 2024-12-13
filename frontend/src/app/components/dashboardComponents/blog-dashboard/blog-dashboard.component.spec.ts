@@ -51,7 +51,7 @@ describe('BlogDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('should have all its elements', async ()=>{
+  it('should have all its elements', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
@@ -93,7 +93,7 @@ describe('BlogDashboardComponent', () => {
       expect(author.textContent.trim()).toEqual('Roman');
       expect(title.textContent.trim()).toEqual('Blogpost einpflegen')
   }),
-  fit('form should get values and send them', ()=>{
+  it('form should get values and send them', ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch')
     const forumThemeForm = fixture.debugElement.nativeElement.querySelector('.blogForm');
     const titleInput = fixture.debugElement.nativeElement.querySelector('#blog_title');
@@ -122,7 +122,7 @@ describe('BlogDashboardComponent', () => {
                       }
     }))
   })
-  fit('should open edit Form on click', async ()=>{
+  it('should open edit Form on click', async ()=>{
     const spyDispatch = spyOn(mockStore, 'dispatch');
     memoizedSelector.setResult([
       {
@@ -169,7 +169,7 @@ describe('BlogDashboardComponent', () => {
       }}))
     })
   });
-  fit('should delete on click', async ()=>{
+  it('should delete on click', async ()=>{
     memoizedSelector.setResult([
       {
         id: 1,
