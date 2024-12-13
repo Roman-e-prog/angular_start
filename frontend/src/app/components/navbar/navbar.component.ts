@@ -28,6 +28,7 @@ user = this.authService.getUser();
         console.error('Error fetching navlinks:', error)
       }
     })
+    this.navlinksService.fetchNavlinks();
   }
   handleLogout = ()=>{
     this.authService.logout()

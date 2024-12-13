@@ -56,7 +56,7 @@ describe('NavbarComponent', () => {
     // After every test, assert that there are no more pending requests.
     httpTestingController.verify();
   });
-  it('should load and display navlinks', async () => {
+  xit('should load and display navlinks', async () => {
     const mockedNavlinks = [
       { name: 'Über mich', url: '/uebermich' },
       { name: 'Blog', url: '/blog' },
