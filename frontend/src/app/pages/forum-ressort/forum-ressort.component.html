@@ -10,7 +10,7 @@
         </div>
         <div class="fieldWrapper" *ngFor="let forum of filteredForums$ | async">
                 <div class="mainWrapper">
-                    <a [routerLink]="['/forum/', forum.question_ressort, forum.id]" class="singleQuestionLink" (click)="handleViews(forum.id!)">
+                    <a [routerLink]="['/forum/', forum.question_ressort, forum.id]" class="singleQuestionLink">
                     <div class="topWrapper">
                         <p class="username">{{forum.username}}</p>
                         <p class="theme">{{forum.question_theme}}</p>

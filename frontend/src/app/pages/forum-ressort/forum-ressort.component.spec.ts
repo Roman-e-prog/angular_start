@@ -147,7 +147,7 @@ describe('ForumRessortComponent', () => {
     topicButton.click();
     expect("Sie müssen sich einloggen, wenn Sie ein Thema eröffnen möchten").toBeTruthy()
   })
-  fit("test the topic open", ()=>{
+  it("test the topic open", ()=>{
     const topicButton = fixture.debugElement.nativeElement.querySelector('.topicButton');
     expect(topicButton).toBeTruthy();
     topicButton.click();

@@ -67,6 +67,7 @@ export class ForumComponent implements OnInit, OnDestroy{
         this.toastr.error(error)
       }
     })
+    this.forumLinksService.fetchForumLinks()
   }
   ngOnDestroy(): void {
     if(this.resizeSubscription){

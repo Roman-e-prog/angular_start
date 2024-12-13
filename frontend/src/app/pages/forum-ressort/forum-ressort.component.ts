@@ -9,13 +9,13 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { matCheckBoxOutline, matThumbDownOutline, matThumbUpOutline } from '@ng-icons/material-icons/outline';
 import { NgIconsModule } from '@ng-icons/core';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services_interceptors/auth.service';
 import { QuestionModuleComponent } from '../../components/question-module/question-module.component';
-import { getAllForum } from '../../store/actions/forum.actions';
+import { getAllForum} from '../../store/actions/forum.actions';
 import { HtmlStripService } from '../../services_interceptors/htmlStrip.service';
 import { ResizeObserverService } from '../../services_interceptors/resize.service';
 import { MobileNavbarComponent } from '../../components/mobile-navbar/mobile-navbar.component';
+
 
 @Component({
   selector: 'app-forum-ressort',
@@ -28,7 +28,6 @@ export class ForumRessortComponent implements OnInit, OnDestroy{
 constructor(private route: ActivatedRoute, 
             private store: Store, 
             private toastr: ToastrService, 
-            private httpClient: HttpClient,
             private authService: AuthService,
             private htmlStripService: HtmlStripService,
             private cd: ChangeDetectorRef,
@@ -91,11 +90,5 @@ name = this.route.snapshot.paramMap.get('name')
   }
   handleClose = ()=>{
     this.questionModule = false;
-  }
-  handleViews = (id:number)=>{
-    this.httpClient.post('http://localhost:5000/api/forum/views', {id:id}).subscribe({
-      next: (response)=>{
-      }
-    })
   }
 }
