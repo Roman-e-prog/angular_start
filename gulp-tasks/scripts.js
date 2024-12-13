@@ -1,10 +1,24 @@
 const { src, dest } = require('gulp');
-const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
+const terser = require('gulp-terser');
 
 function scripts() {
-  return src('frontend/src/**/*.ts') // Target all JSX files in the frontend/src directory
-    .pipe(uglify())
-    .pipe(dest('frontend/build/js')); // Output the compiled and minified JS to the dist/js directory
+  return src('./src/**/*.ts') // Target all TS files in the src directory
+    .pipe(
+      babel({
+        presets: [
+          ['@babel/preset-env', { targets: { node: '20' } }],
+          '@babel/preset-typescript',
+        ],
+        plugins: [
+          ['@babel/plugin-proposal-decorators', { legacy: true }],
+          ['@babel/plugin-transform-class-properties', { loose: true }],
+        ],
+      })
+    ) 
+    .pipe(terser())
+    .pipe(dest('./build/js')); // Output compiled and minified JS to the build/js directory
 }
 
 module.exports = scripts;
+
