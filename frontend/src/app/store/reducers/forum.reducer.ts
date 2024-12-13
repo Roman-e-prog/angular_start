@@ -17,7 +17,16 @@ import {
     getForumError,
     getAllUserQuestions,
     getAllUserQuestionsError,
-    getAllUserQuestionsSuccess
+    getAllUserQuestionsSuccess,
+    incrementViews,
+    incrementViewsSuccess,
+    incrementViewsError,
+    incrementLikes,
+    incrementLikesSuccess,
+    incrementLikesError,
+    incrementDisLikes,
+    incrementDisLikesSuccess,
+    incrementDisLikesError,
 } from '../actions/forum.actions';
 
 export interface Forum {
@@ -118,7 +127,43 @@ export const _forumReducer = createReducer(
             isLoading: false,
             isError: true,
             message: error,
-        }))
+        })),
+        on(incrementViews, (state) => ({
+            ...state,
+            isUpdatingViews: true,
+          })),
+          on(incrementViewsSuccess, (state) => ({
+            ...state,
+            isUpdatingViews: false,
+          })),
+          on(incrementViewsError, (state) => ({
+            ...state,
+            isUpdatingViews: false,
+          })),
+          on(incrementLikes, (state) => ({
+            ...state,
+            isUpdatingLikes: true,
+          })),
+          on(incrementLikesSuccess, (state) => ({
+            ...state,
+            isUpdatingLikes: false,
+          })),
+          on(incrementLikesError, (state) => ({
+            ...state,
+            isUpdatingLikes: false,
+          })),
+          on(incrementDisLikes, (state) => ({
+            ...state,
+            isUpdatingDisLikes: true,
+          })),
+          on(incrementDisLikesSuccess, (state) => ({
+            ...state,
+            isUpdatingDisLikes: false,
+          })),
+          on(incrementDisLikesError, (state) => ({
+            ...state,
+            isUpdatingDisLikes: false,
+          })),   
 );
 export const forumReducer = (action:any, data:any)=>{
     return _forumReducer(action, data)

@@ -9,7 +9,9 @@ export const selectAllForumData = createSelector(
 )
 export const selectForumData = createSelector(
     selectForum,
-    (state)=>state.forum
+    (state)=>{
+        return state.forum
+    }
 )
 export const selectForumLoading = createSelector(
     selectForum,

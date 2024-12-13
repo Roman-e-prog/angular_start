@@ -18,6 +18,15 @@ import {
     getAllAnswersToQuestion,
     getAllAnswersToQuestionSuccess,
     getAllAnswersToQuestionError,
+    incrementAnswerLikes,
+    incrementAnswerLikesSuccess,
+    incrementAnswerLikesError,
+    incrementAnswerDisLikes,
+    incrementAnswerDisLikesSuccess,
+    incrementAnswerDisLikesError,
+    hasSolved,
+    hasSolvedSuccess,
+    hasSolvedError,
 } from '../actions/forumAnswers.actions';
 
 export interface ForumAnswer {
@@ -114,6 +123,64 @@ export const _forumAnswerReducer = createReducer(
             isError:true,
             message: error
         })),
+        on(incrementAnswerLikes, (state) => ({
+            ...state,
+            isLoading: true,
+          })),
+          on(incrementAnswerLikesSuccess, (state, { id, likes}) => ({
+            ...state,
+            isLoading:false,
+            isSuccess:true,
+            allAnswersToQuestion: state.allAnswersToQuestion.map((answer) =>
+              answer.id === id ? { ...answer, likes} : answer
+            ),
+          })),
+          on(incrementAnswerLikesError, (state, {error}) => ({
+            ...state,
+            isLoading: false,
+            isError:true,
+            message:error
+          })),
+          on(incrementAnswerDisLikes, (state) => ({
+            ...state,
+            isLoading: true,
+          })),
+          // on(incrementAnswerDisLikes, (state, action) => {
+          //   console.log('incrementAnswerDisLikes action processed:', action);
+          //   return state;
+          // }),
+          on(incrementAnswerDisLikesSuccess, (state, { id, dislikes}) => ({
+            ...state,
+            isLoading:false,
+            isSuccess:true,
+            allAnswersToQuestion: state.allAnswersToQuestion.map((answer) =>
+              answer.id === id ? { ...answer, dislikes} : answer
+            ),
+          })),
+          on(incrementAnswerDisLikesError, (state,{error}) => ({
+            ...state,
+            isLoading: false,
+            isError:true,
+            message:error
+          })),             
+          on(hasSolved, (state) => ({
+            ...state,
+            isLoading: true,
+          })),
+          on(hasSolvedSuccess, (state, { id, has_solved }) => ({
+            ...state,
+            isLoading:false,
+            isSuccess:true,
+            allAnswersToQuestion: state.allAnswersToQuestion.map((answer) =>
+              answer.id === id ? { ...answer, has_solved } : answer
+            ),
+          })),
+          on(hasSolvedError, (state,{error}) => ({
+            ...state,
+            isLoading: false,
+            isError:true,
+            message:error
+          })),   
 );
 export const forumAnswerReducer = (action:any, data:any)=>{
     return _forumAnswerReducer(action, data)

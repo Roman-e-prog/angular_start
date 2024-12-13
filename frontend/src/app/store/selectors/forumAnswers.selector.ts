@@ -25,5 +25,7 @@ export const selectForumAnswerMessage = createSelector(
 )
 export const selectAllAnswerToQuestion = createSelector(
     selectForumAnswer,
-    (state)=>state.allAnswersToQuestion
+    (state)=>{
+        return state.allAnswersToQuestion
+    }
 )

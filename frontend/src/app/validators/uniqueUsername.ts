@@ -9,7 +9,6 @@ export class UsernameValidator {
 
   uniqueUsernameValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      console.log('i am invoked with', control.value)
       const value = control.value;
       if (!value) {
         return of(null); // Return null if the value is empty

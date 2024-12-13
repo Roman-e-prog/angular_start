@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {ofType, createEffect, Actions} from '@ngrx/effects'
 import { Store } from "@ngrx/store";
+import {environment} from '../../environments/environment'
 import { createUebermich, 
          createUebermichError, 
          createUebermichSuccess,
@@ -23,7 +24,7 @@ import { Uebermich } from "../reducers/uebermich.reducer";
 
 @Injectable()
 export class UebermichEffect{
-api_url = 'http://localhost:5000/api/uebermich/';
+api_url = `${environment.apiURL}api/uebermich/`;
 
 createUebermich$ = createEffect(()=>
     this.actions$.pipe(

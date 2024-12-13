@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {ofType, createEffect, Actions} from '@ngrx/effects'
 import { Store } from "@ngrx/store";
+import {environment} from '../../environments/environment'
 import {
     createUserMessage,
     createUserMessageSuccess,
@@ -24,7 +25,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class UserMessagesEffect{
-api_url = 'http://localhost:5000/api/usermessages/';
+api_url = `${environment.apiURL}api/usermessages/`;
 
 createUserMessage$ = createEffect(()=>
     this.actions$.pipe(
