@@ -1,4 +1,5 @@
 import  express from 'express';
+import { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { createAdminmessagesTable } from './tables/adminmessages';
@@ -22,6 +23,7 @@ import forumthemesRouter from './routes/forumthemesRoute';
 import uebermichRouter from './routes/uebermichRoute';
 import usermessagesRouter from './routes/usermessageRouter';
 import { createForgottenTable } from './tables/forgottenTable';
+
 const cookieParser = require('cookie-parser');
 dotenv.config();
 const app = express();
@@ -40,6 +42,7 @@ createForumthemesTable();
 createUebermichTable();
 createusermessagesTable();
 createForgottenTable();
+
 app.use('/api/adminmessages', adminmessagesRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/bibliothek', bibliothekRouter)
@@ -52,6 +55,33 @@ app.use('/api/uebermich', uebermichRouter)
 app.use('/api/usermessages', usermessagesRouter)
 app.use(express.static(path.resolve(process.cwd(),'./frontend/src/' )))
 
+//Serve frontend
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build'),{
+        maxAge: '1y'
+      }));
+  
+    app.get('*', (req, res) =>{
+        // console.log(req.originalUrl)
+        res.sendFile(
+          path.resolve(__dirname, '../frontend/build/index.html'), {
+            headers: {
+                  'Cache-Control': 'no-store',
+            },
+          }
+        )
+      }
+    );
+  } 
+  else {
+    app.get('/', (req:Request, res:any) => res.send('Please send NODE_ENV to production'));
+  }
+
+  // app.use((req, res, next) => {
+  //   console.log(`Asset requested: ${req.url}`);
+  //   next();
+  // });
+
 app.listen(port, ()=>{
-    console.log('Successfully connected to the database')
+    console.log(`Server is running on port:${port}`)
 })
