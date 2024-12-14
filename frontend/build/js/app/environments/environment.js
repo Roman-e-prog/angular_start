@@ -1,1 +1,1 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.environment=void 0;const environment=exports.environment={production:!1};
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.environment=void 0;const environment=exports.environment={production:!1,apiURL:"http://localhost:5000/"};
